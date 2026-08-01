@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:definitions xmlns:ns0="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns1="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns2="http://www.omg.org/spec/DD/20100524/DC" xmlns:ns3="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Core01_TimKiem_LuaChon_ThanhToan" targetNamespace="http://bpmn.io/schema/bpmn">
+  <ns0:collaboration id="Collab_Core01_TimKiem_LuaChon_ThanhToan">
+    <ns0:participant id="Part_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé máy bay MoMo" processRef="Proc_Core01_TimKiem_LuaChon_ThanhToan" />
+  </ns0:collaboration>
+  <ns0:process id="Proc_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé máy bay MoMo" isExecutable="false">
+    <ns0:laneSet id="LaneSet_Core01_TimKiem_LuaChon_ThanhToan">
+      <ns0:lane id="Lane_Cust" name="KHÁCH HÀNG (Customer)">
+        <ns0:flowNodeRef>s1</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t1</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t4</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t7</ns0:flowNodeRef>
+        <ns0:flowNodeRef>e1</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_App" name="GIAO DIỆN MOMO CLIENT APP">
+        <ns0:flowNodeRef>t2</ns0:flowNodeRef>
+        <ns0:flowNodeRef>g1</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t3</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t5</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_Backend" name="HE THONG BACKEND MOMO TRAVEL">
+        <ns0:flowNodeRef>t6</ns0:flowNodeRef>
+        <ns0:flowNodeRef>g2</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t8</ns0:flowNodeRef>
+        <ns0:flowNodeRef>g3</ns0:flowNodeRef>
+        <ns0:flowNodeRef>e2</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_Payment" name="CONG THANH TOAN MOMO">
+        <ns0:flowNodeRef>t9</ns0:flowNodeRef>
+        <ns0:flowNodeRef>g4</ns0:flowNodeRef>
+        <ns0:flowNodeRef>e3</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_Airline" name="HE THONG HANG BAY / GDS / CRS">
+        <ns0:flowNodeRef>t10</ns0:flowNodeRef>
+        <ns0:flowNodeRef>t11</ns0:flowNodeRef>
+      </ns0:lane>
+    </ns0:laneSet>
+    <ns0:startEvent id="s1" name="Phát sinh nhu cầu đi lại">
+      <ns0:outgoing>f1</ns0:outgoing>
+    </ns0:startEvent>
+    <ns0:userTask id="t1" name="Nhập tiêu chí tìm kiếm (điểm đi, điểm đến, ngày bay, số khách)">
+      <ns0:incoming>f1</ns0:incoming>
+      <ns0:outgoing>f2</ns0:outgoing>
+    </ns0:userTask>
+    <ns0:serviceTask id="t2" name="Kiểm tra định dạng &amp; tiêu chí dữ liệu tìm kiếm">
+      <ns0:incoming>f2</ns0:incoming>
+      <ns0:outgoing>f3</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:exclusiveGateway id="g1" name="Tiêu chí hợp lệ?">
+      <ns0:incoming>f3</ns0:incoming>
+      <ns0:outgoing>f4</ns0:outgoing>
+      <ns0:outgoing>f5</ns0:outgoing>
+    </ns0:exclusiveGateway>
+    <ns0:serviceTask id="t3" name="Hiển thị thông báo yêu cầu sửa tiêu chí">
+      <ns0:incoming>f4</ns0:incoming>
+      <ns0:outgoing>f1</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:userTask id="t4" name="Lựa chọn chuyến bay &amp; nhập thông tin hành khách">
+      <ns0:incoming>f5</ns0:incoming>
+      <ns0:outgoing>f6</ns0:outgoing>
+    </ns0:userTask>
+    <ns0:serviceTask id="t5" name="Tự động áp dụng mã ưu đãi &amp; dịch vụ ban đầu">
+      <ns0:incoming>f6</ns0:incoming>
+      <ns0:outgoing>f7</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:serviceTask id="t6" name="Gửi lệnh tạo PNR &amp; giữ chỗ tạm thời sang Hãng bay">
+      <ns0:incoming>f7</ns0:incoming>
+      <ns0:outgoing>f8</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:exclusiveGateway id="g2" name="Tạo PNR thành công?">
+      <ns0:incoming>f8</ns0:incoming>
+      <ns0:outgoing>f9</ns0:outgoing>
+      <ns0:outgoing>f10</ns0:outgoing>
+    </ns0:exclusiveGateway>
+    <ns0:userTask id="t7" name="Xác nhận nguồn tiền &amp; xác thực thanh toán (Biometrics/OTP)">
+      <ns0:incoming>f9</ns0:incoming>
+      <ns0:outgoing>f11</ns0:outgoing>
+    </ns0:userTask>
+    <ns0:serviceTask id="t8" name="Xử lý hủy giữ chỗ &amp; thông báo hết giữ chỗ">
+      <ns0:incoming>f10</ns0:incoming>
+      <ns0:outgoing>e2</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:serviceTask id="t9" name="Trích tiền tài khoản ví &amp; hạch toán tài chính">
+      <ns0:incoming>f11</ns0:incoming>
+      <ns0:outgoing>f12</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:exclusiveGateway id="g4" name="Thanh toán thành công?">
+      <ns0:incoming>f12</ns0:incoming>
+      <ns0:outgoing>f13</ns0:outgoing>
+      <ns0:outgoing>f14</ns0:outgoing>
+    </ns0:exclusiveGateway>
+    <ns0:serviceTask id="t10" name="Gửi lệnh phát hành vé máy bay điện tử (e-Ticket)">
+      <ns0:incoming>f13</ns0:incoming>
+      <ns0:outgoing>f15</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:serviceTask id="t11" name="Xử lý hoàn tiền ví &amp; thông báo lỗi xuất vé">
+      <ns0:incoming>f14</ns0:incoming>
+      <ns0:outgoing>e3</ns0:outgoing>
+    </ns0:serviceTask>
+    <ns0:endEvent id="e1" name="Đặt vé máy bay thành công &amp; Nhận e-Ticket">
+      <ns0:incoming>f15</ns0:incoming>
+    </ns0:endEvent>
+    <ns0:endEvent id="e2" name="Hủy giữ chỗ - Kết thúc giao dịch" />
+    <ns0:endEvent id="e3" name="Giao dịch lỗi - Hoàn tiền thành công" />
+    <ns0:sequenceFlow id="f1" sourceRef="s1" targetRef="t1" />
+    <ns0:sequenceFlow id="f2" sourceRef="t1" targetRef="t2" />
+    <ns0:sequenceFlow id="f3" sourceRef="t2" targetRef="g1" />
+    <ns0:sequenceFlow id="f4" sourceRef="g1" targetRef="t3" name="Không hợp lệ" />
+    <ns0:sequenceFlow id="f5" sourceRef="g1" targetRef="t4" name="Hợp lệ" />
+    <ns0:sequenceFlow id="f6" sourceRef="t4" targetRef="t5" />
+    <ns0:sequenceFlow id="f7" sourceRef="t5" targetRef="t6" />
+    <ns0:sequenceFlow id="f8" sourceRef="t6" targetRef="g2" />
+    <ns0:sequenceFlow id="f9" sourceRef="g2" targetRef="t7" name="Thành công (Có PNR)" />
+    <ns0:sequenceFlow id="f10" sourceRef="g2" targetRef="t8" name="Thất bại / Hết chỗ" />
+    <ns0:sequenceFlow id="f11" sourceRef="t7" targetRef="t9" />
+    <ns0:sequenceFlow id="f12" sourceRef="t9" targetRef="g4" />
+    <ns0:sequenceFlow id="f13" sourceRef="g4" targetRef="t10" name="Hạch toán OK" />
+    <ns0:sequenceFlow id="f14" sourceRef="g4" targetRef="t11" name="Số dư không đủ / Lỗi OTP" />
+    <ns0:sequenceFlow id="f15" sourceRef="t10" targetRef="e1" name="Đã cấp e-Ticket" />
+  </ns0:process>
+  <ns1:BPMNDiagram id="Diag_Core01_TimKiem_LuaChon_ThanhToan">
+    <ns1:BPMNPlane id="Plane_Core01_TimKiem_LuaChon_ThanhToan" bpmnElement="Collab_Core01_TimKiem_LuaChon_ThanhToan">
+      <ns1:BPMNShape id="Part_Core01_TimKiem_LuaChon_ThanhToan_di" bpmnElement="Part_Core01_TimKiem_LuaChon_ThanhToan" isHorizontal="true" />
+      <ns1:BPMNShape id="Lane_Cust_di" bpmnElement="Lane_Cust" isHorizontal="true">
+        <ns2:Bounds x="160" y="50" width="1400" height="160" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="Lane_App_di" bpmnElement="Lane_App" isHorizontal="true">
+        <ns2:Bounds x="160" y="210" width="1400" height="160" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="Lane_Backend_di" bpmnElement="Lane_Backend" isHorizontal="true">
+        <ns2:Bounds x="160" y="370" width="1400" height="160" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="Lane_Payment_di" bpmnElement="Lane_Payment" isHorizontal="true">
+        <ns2:Bounds x="160" y="530" width="1400" height="160" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="Lane_Airline_di" bpmnElement="Lane_Airline" isHorizontal="true">
+        <ns2:Bounds x="160" y="690" width="1400" height="160" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="s1_di" bpmnElement="s1">
+        <ns2:Bounds x="240" y="95" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t1_di" bpmnElement="t1">
+        <ns2:Bounds x="350" y="95" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t2_di" bpmnElement="t2">
+        <ns2:Bounds x="460" y="255" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="g1_di" bpmnElement="g1">
+        <ns2:Bounds x="570" y="255" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t3_di" bpmnElement="t3">
+        <ns2:Bounds x="680" y="255" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t4_di" bpmnElement="t4">
+        <ns2:Bounds x="790" y="95" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t5_di" bpmnElement="t5">
+        <ns2:Bounds x="900" y="255" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t6_di" bpmnElement="t6">
+        <ns2:Bounds x="1010" y="415" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="g2_di" bpmnElement="g2">
+        <ns2:Bounds x="1120" y="415" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t7_di" bpmnElement="t7">
+        <ns2:Bounds x="1230" y="95" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t8_di" bpmnElement="t8">
+        <ns2:Bounds x="1340" y="415" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t9_di" bpmnElement="t9">
+        <ns2:Bounds x="1450" y="575" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="g4_di" bpmnElement="g4">
+        <ns2:Bounds x="240" y="575" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t10_di" bpmnElement="t10">
+        <ns2:Bounds x="350" y="735" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="t11_di" bpmnElement="t11">
+        <ns2:Bounds x="460" y="735" width="100" height="70" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="e1_di" bpmnElement="e1">
+        <ns2:Bounds x="570" y="95" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="e2_di" bpmnElement="e2">
+        <ns2:Bounds x="680" y="415" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNShape id="e3_di" bpmnElement="e3">
+        <ns2:Bounds x="790" y="575" width="36" height="36" />
+      </ns1:BPMNShape>
+      <ns1:BPMNEdge id="f1_di" bpmnElement="f1">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f2_di" bpmnElement="f2">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f3_di" bpmnElement="f3">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f4_di" bpmnElement="f4">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f5_di" bpmnElement="f5">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f6_di" bpmnElement="f6">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f7_di" bpmnElement="f7">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f8_di" bpmnElement="f8">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f9_di" bpmnElement="f9">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f10_di" bpmnElement="f10">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f11_di" bpmnElement="f11">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f12_di" bpmnElement="f12">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f13_di" bpmnElement="f13">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f14_di" bpmnElement="f14">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+      <ns1:BPMNEdge id="f15_di" bpmnElement="f15">
+        <ns3:waypoint x="250" y="100" />
+        <ns3:waypoint x="350" y="100" />
+      </ns1:BPMNEdge>
+    </ns1:BPMNPlane>
+  </ns1:BPMNDiagram>
+</ns0:definitions>
