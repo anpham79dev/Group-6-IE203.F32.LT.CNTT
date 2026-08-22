@@ -1,96 +1,391 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<ns0:definitions xmlns:ns0="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns1="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns2="http://www.omg.org/spec/DD/20100524/DC" xmlns:ns3="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Core01_TimKiem_LuaChon_ThanhToan" targetNamespace="http://bpmn.io/schema/bpmn">
-  <ns0:collaboration id="Collab_Core01_TimKiem_LuaChon_ThanhToan">
-    <ns0:participant id="Part_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé MoMo" processRef="Proc_Core01_TimKiem_LuaChon_ThanhToan"/>
-  </ns0:collaboration>
-  <ns0:process id="Proc_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé MoMo" isExecutable="false">
-    <ns0:laneSet id="LaneSet_Core01_TimKiem_LuaChon_ThanhToan">
-      <ns0:lane id="Lane_Cust" name="KHÁCH HÀNG (Customer)">
-        <ns0:flowNodeRef>s1</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t1</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t4</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t7</ns0:flowNodeRef>
-        <ns0:flowNodeRef>e1</ns0:flowNodeRef>
-      </ns0:lane>
-      <ns0:lane id="Lane_App" name="GIAO DIỆN MOMO CLIENT APP">
-        <ns0:flowNodeRef>t2</ns0:flowNodeRef>
-        <ns0:flowNodeRef>g1</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t3</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t5</ns0:flowNodeRef>
-      </ns0:lane>
-      <ns0:lane id="Lane_Backend" name="HỆ THỐNG BACKEND MOMO TRAVEL">
-        <ns0:flowNodeRef>t6</ns0:flowNodeRef>
-        <ns0:flowNodeRef>g2</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t8</ns0:flowNodeRef>
-        <ns0:flowNodeRef>e2</ns0:flowNodeRef>
-      </ns0:lane>
-      <ns0:lane id="Lane_Payment" name="CỔNG THANH TOÁN MOMO">
-        <ns0:flowNodeRef>t9</ns0:flowNodeRef>
-        <ns0:flowNodeRef>g4</ns0:flowNodeRef>
-        <ns0:flowNodeRef>t11</ns0:flowNodeRef>
-        <ns0:flowNodeRef>e3</ns0:flowNodeRef>
-      </ns0:lane>
-      <ns0:lane id="Lane_Airline" name="HỆ THỐNG HÃNG BAY / GDS / CRS">
-        <ns0:flowNodeRef>t10</ns0:flowNodeRef>
-      </ns0:lane>
-    </ns0:laneSet>
-    <ns0:startEvent id="s1" name="Phát sinh nhu cầu đi lại">
-      <ns0:outgoing>f1</ns0:outgoing></ns0:startEvent>
-    <ns0:userTask id="t1" name="Nhập tiêu chí tìm kiếm (điểm đi, ngày, số khách)">
-      <ns0:incoming>f1</ns0:incoming><ns0:incoming>f4b</ns0:incoming><ns0:outgoing>f2</ns0:outgoing></ns0:userTask>
-    <ns0:serviceTask id="t2" name="Kiểm tra định dạng &amp; tiêu chí dữ liệu tìm kiếm">
-      <ns0:incoming>f2</ns0:incoming><ns0:outgoing>f3</ns0:outgoing></ns0:serviceTask>
-    <ns0:exclusiveGateway id="g1" name="Dữ liệu hợp lệ?">
-      <ns0:incoming>f3</ns0:incoming><ns0:outgoing>f4</ns0:outgoing><ns0:outgoing>f5</ns0:outgoing></ns0:exclusiveGateway>
-    <ns0:serviceTask id="t3" name="Hiển thị cảnh báo &amp; gợi ý sửa tiêu chí">
-      <ns0:incoming>f4</ns0:incoming><ns0:outgoing>f4b</ns0:outgoing></ns0:serviceTask>
-    <ns0:userTask id="t4" name="Lựa chọn chuyến bay &amp; nhập thông tin hành khách">
-      <ns0:incoming>f5</ns0:incoming><ns0:outgoing>f6</ns0:outgoing></ns0:userTask>
-    <ns0:serviceTask id="t5" name="Tự động áp dụng mã ưu đãi &amp; dịch vụ ban đầu">
-      <ns0:incoming>f6</ns0:incoming><ns0:outgoing>f7</ns0:outgoing></ns0:serviceTask>
-    <ns0:serviceTask id="t6" name="Gửi lệnh tạo PNR &amp; giữ chỗ tạm thời sang Hãng">
-      <ns0:incoming>f7</ns0:incoming><ns0:outgoing>f8</ns0:outgoing></ns0:serviceTask>
-    <ns0:exclusiveGateway id="g2" name="Có PNR giữ chỗ?">
-      <ns0:incoming>f8</ns0:incoming><ns0:outgoing>f9</ns0:outgoing><ns0:outgoing>f10</ns0:outgoing></ns0:exclusiveGateway>
-    <ns0:userTask id="t7" name="Xác nhận nguồn tiền &amp; xác thực thanh toán (Biometrics/OTP)">
-      <ns0:incoming>f9</ns0:incoming><ns0:outgoing>f11</ns0:outgoing></ns0:userTask>
-    <ns0:serviceTask id="t8" name="Xử lý hủy giữ chỗ &amp; thông báo hết thời hạn">
-      <ns0:incoming>f10</ns0:incoming><ns0:outgoing>f16</ns0:outgoing></ns0:serviceTask>
-    <ns0:serviceTask id="t9" name="Trích tiền tài khoản ví &amp; hạch toán tài chính">
-      <ns0:incoming>f11</ns0:incoming><ns0:outgoing>f12</ns0:outgoing></ns0:serviceTask>
-    <ns0:exclusiveGateway id="g4" name="Hạch toán OK?">
-      <ns0:incoming>f12</ns0:incoming><ns0:outgoing>f13</ns0:outgoing><ns0:outgoing>f14</ns0:outgoing></ns0:exclusiveGateway>
-    <ns0:serviceTask id="t10" name="Gửi lệnh phát hành vé máy bay điện tử (e-Ticket)">
-      <ns0:incoming>f13</ns0:incoming><ns0:outgoing>f15</ns0:outgoing></ns0:serviceTask>
-    <ns0:serviceTask id="t11" name="Xử lý hoàn tiền ví &amp; thông báo lỗi xuất vé">
-      <ns0:incoming>f14</ns0:incoming><ns0:outgoing>f17</ns0:outgoing></ns0:serviceTask>
-    <ns0:endEvent id="e1" name="Đặt vé máy bay thành công &amp; Nhận e-Ticket">
-      <ns0:incoming>f15</ns0:incoming></ns0:endEvent>
-    <ns0:endEvent id="e2" name="Hủy giữ chỗ - Kết thúc">
-      <ns0:incoming>f16</ns0:incoming></ns0:endEvent>
-    <ns0:endEvent id="e3" name="Giao dịch lỗi - Hoàn tiền">
-      <ns0:incoming>f17</ns0:incoming></ns0:endEvent>
-    <ns0:sequenceFlow id="f1" sourceRef="s1" targetRef="t1"/>
-    <ns0:sequenceFlow id="f2" sourceRef="t1" targetRef="t2"/>
-    <ns0:sequenceFlow id="f3" sourceRef="t2" targetRef="g1"/>
-    <ns0:sequenceFlow id="f4" sourceRef="g1" targetRef="t3" name="Không"/>
-    <ns0:sequenceFlow id="f4b" sourceRef="t3" targetRef="t1"/>
-    <ns0:sequenceFlow id="f5" sourceRef="g1" targetRef="t4" name="Có"/>
-    <ns0:sequenceFlow id="f6" sourceRef="t4" targetRef="t5"/>
-    <ns0:sequenceFlow id="f7" sourceRef="t5" targetRef="t6"/>
-    <ns0:sequenceFlow id="f8" sourceRef="t6" targetRef="g2"/>
-    <ns0:sequenceFlow id="f9" sourceRef="g2" targetRef="t7" name="Có PNR"/>
-    <ns0:sequenceFlow id="f10" sourceRef="g2" targetRef="t8" name="Thất bại"/>
-    <ns0:sequenceFlow id="f11" sourceRef="t7" targetRef="t9"/>
-    <ns0:sequenceFlow id="f12" sourceRef="t9" targetRef="g4"/>
-    <ns0:sequenceFlow id="f13" sourceRef="g4" targetRef="t10" name="Thành công"/>
-    <ns0:sequenceFlow id="f14" sourceRef="g4" targetRef="t11" name="Lỗi / Không đủ tiền"/>
-    <ns0:sequenceFlow id="f15" sourceRef="t10" targetRef="e1" name="Đã xuất vé"/>
-    <ns0:sequenceFlow id="f16" sourceRef="t8" targetRef="e2"/>
-    <ns0:sequenceFlow id="f17" sourceRef="t11" targetRef="e3"/>
-  </ns0:process>
-  <ns1:BPMNDiagram id="Diag_Core01_TimKiem_LuaChon_ThanhToan">
-    <ns1:BPMNPlane id="Plane_Core01_TimKiem_LuaChon_ThanhToan" bpmnElement="Collab_Core01_TimKiem_LuaChon_ThanhToan">
-      <ns1:BPMNShape id="Part_Core01_TimKiem_LuaChon_ThanhToan_di" bpmnElement="Part_Core01_TimKiem_LuaChon_ThanhToan" isHorizontal="true"><ns2:Bounds x="160" y="60" width="2526" height="870"/></ns1:BPMNShape><ns1:BPMNShape id="Lane_Cust_di" bpmnElement="Lane_Cust" isHorizontal="true"><ns2:Bounds x="190" y="60" width="2496" height="170"/></ns1:BPMNShape><ns1:BPMNShape id="Lane_App_di" bpmnElement="Lane_App" isHorizontal="true"><ns2:Bounds x="190" y="230" width="2496" height="170"/></ns1:BPMNShape><ns1:BPMNShape id="Lane_Backend_di" bpmnElement="Lane_Backend" isHorizontal="true"><ns2:Bounds x="190" y="400" width="2496" height="170"/></ns1:BPMNShape><ns1:BPMNShape id="Lane_Payment_di" bpmnElement="Lane_Payment" isHorizontal="true"><ns2:Bounds x="190" y="570" width="2496" height="170"/></ns1:BPMNShape><ns1:BPMNShape id="Lane_Airline_di" bpmnElement="Lane_Airline" isHorizontal="true"><ns2:Bounds x="190" y="740" width="2496" height="170"/></ns1:BPMNShape><ns1:BPMNShape id="s1_di" bpmnElement="s1"><ns2:Bounds x="210" y="127" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="t1_di" bpmnElement="t1"><ns2:Bounds x="1160" y="110" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t2_di" bpmnElement="t2"><ns2:Bounds x="590" y="280" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="g1_di" bpmnElement="g1"><ns2:Bounds x="780" y="297" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="t3_di" bpmnElement="t3"><ns2:Bounds x="970" y="280" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t4_di" bpmnElement="t4"><ns2:Bounds x="970" y="110" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t5_di" bpmnElement="t5"><ns2:Bounds x="1160" y="280" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t6_di" bpmnElement="t6"><ns2:Bounds x="1350" y="450" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="g2_di" bpmnElement="g2"><ns2:Bounds x="1540" y="467" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="t7_di" bpmnElement="t7"><ns2:Bounds x="1730" y="110" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t8_di" bpmnElement="t8"><ns2:Bounds x="1730" y="450" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t9_di" bpmnElement="t9"><ns2:Bounds x="1920" y="620" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="g4_di" bpmnElement="g4"><ns2:Bounds x="2110" y="637" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="t10_di" bpmnElement="t10"><ns2:Bounds x="2300" y="790" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="t11_di" bpmnElement="t11"><ns2:Bounds x="2300" y="620" width="130" height="70"/></ns1:BPMNShape><ns1:BPMNShape id="e1_di" bpmnElement="e1"><ns2:Bounds x="2490" y="127" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="e2_di" bpmnElement="e2"><ns2:Bounds x="1920" y="467" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNShape id="e3_di" bpmnElement="e3"><ns2:Bounds x="2490" y="637" width="36" height="36"/></ns1:BPMNShape><ns1:BPMNEdge id="f1_di" bpmnElement="f1"><ns3:waypoint x="246" y="145"/><ns3:waypoint x="1160" y="145"/></ns1:BPMNEdge><ns1:BPMNEdge id="f2_di" bpmnElement="f2"><ns3:waypoint x="1225" y="180"/><ns3:waypoint x="1225" y="315"/><ns3:waypoint x="720" y="315"/></ns1:BPMNEdge><ns1:BPMNEdge id="f3_di" bpmnElement="f3"><ns3:waypoint x="720" y="315"/><ns3:waypoint x="780" y="315"/></ns1:BPMNEdge><ns1:BPMNEdge id="f4_di" bpmnElement="f4"><ns3:waypoint x="816" y="315"/><ns3:waypoint x="970" y="315"/><ns1:BPMNLabel><ns2:Bounds x="950" y="300" width="40" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f4b_di" bpmnElement="f4b"><ns3:waypoint x="1100" y="315"/><ns3:waypoint x="1130" y="315"/><ns3:waypoint x="1130" y="145"/><ns3:waypoint x="1160" y="145"/></ns1:BPMNEdge><ns1:BPMNEdge id="f5_di" bpmnElement="f5"><ns3:waypoint x="816" y="315"/><ns3:waypoint x="893" y="315"/><ns3:waypoint x="893" y="145"/><ns3:waypoint x="970" y="145"/><ns1:BPMNLabel><ns2:Bounds x="873" y="130" width="40" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f6_di" bpmnElement="f6"><ns3:waypoint x="1100" y="145"/><ns3:waypoint x="1130" y="145"/><ns3:waypoint x="1130" y="315"/><ns3:waypoint x="1160" y="315"/></ns1:BPMNEdge><ns1:BPMNEdge id="f7_di" bpmnElement="f7"><ns3:waypoint x="1290" y="315"/><ns3:waypoint x="1320" y="315"/><ns3:waypoint x="1320" y="485"/><ns3:waypoint x="1350" y="485"/></ns1:BPMNEdge><ns1:BPMNEdge id="f8_di" bpmnElement="f8"><ns3:waypoint x="1480" y="485"/><ns3:waypoint x="1540" y="485"/></ns1:BPMNEdge><ns1:BPMNEdge id="f9_di" bpmnElement="f9"><ns3:waypoint x="1576" y="485"/><ns3:waypoint x="1653" y="485"/><ns3:waypoint x="1653" y="145"/><ns3:waypoint x="1730" y="145"/><ns1:BPMNLabel><ns2:Bounds x="1633" y="130" width="42" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f10_di" bpmnElement="f10"><ns3:waypoint x="1576" y="485"/><ns3:waypoint x="1730" y="485"/><ns1:BPMNLabel><ns2:Bounds x="1710" y="470" width="56" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f11_di" bpmnElement="f11"><ns3:waypoint x="1860" y="145"/><ns3:waypoint x="1890" y="145"/><ns3:waypoint x="1890" y="655"/><ns3:waypoint x="1920" y="655"/></ns1:BPMNEdge><ns1:BPMNEdge id="f12_di" bpmnElement="f12"><ns3:waypoint x="2050" y="655"/><ns3:waypoint x="2110" y="655"/></ns1:BPMNEdge><ns1:BPMNEdge id="f13_di" bpmnElement="f13"><ns3:waypoint x="2146" y="655"/><ns3:waypoint x="2223" y="655"/><ns3:waypoint x="2223" y="825"/><ns3:waypoint x="2300" y="825"/><ns1:BPMNLabel><ns2:Bounds x="2203" y="810" width="70" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f14_di" bpmnElement="f14"><ns3:waypoint x="2146" y="655"/><ns3:waypoint x="2300" y="655"/><ns1:BPMNLabel><ns2:Bounds x="2280" y="640" width="133" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f15_di" bpmnElement="f15"><ns3:waypoint x="2430" y="825"/><ns3:waypoint x="2460" y="825"/><ns3:waypoint x="2460" y="145"/><ns3:waypoint x="2490" y="145"/><ns1:BPMNLabel><ns2:Bounds x="2440" y="130" width="70" height="18"/></ns1:BPMNLabel></ns1:BPMNEdge><ns1:BPMNEdge id="f16_di" bpmnElement="f16"><ns3:waypoint x="1860" y="485"/><ns3:waypoint x="1920" y="485"/></ns1:BPMNEdge><ns1:BPMNEdge id="f17_di" bpmnElement="f17"><ns3:waypoint x="2430" y="655"/><ns3:waypoint x="2490" y="655"/></ns1:BPMNEdge></ns1:BPMNPlane>
-  </ns1:BPMNDiagram>
-</ns0:definitions>
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Core01_TimKiem_LuaChon_ThanhToan" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collab_Core01_TimKiem_LuaChon_ThanhToan">
+    <bpmn:participant id="Part_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé MoMo" processRef="Proc_Core01_TimKiem_LuaChon_ThanhToan" />
+  </bpmn:collaboration>
+  <bpmn:process id="Proc_Core01_TimKiem_LuaChon_ThanhToan" name="Quy trình Tìm kiếm, Lựa chọn hành trình, Thanh toán và Xác nhận đặt vé MoMo" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Core01_TimKiem_LuaChon_ThanhToan">
+      <bpmn:lane id="Lane_Cust" name="KHÁCH HÀNG (Customer)">
+        <bpmn:flowNodeRef>s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_App" name="GIAO DIỆN MOMO CLIENT APP">
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Backend" name="HỆ THỐNG BACKEND MOMO TRAVEL">
+        <bpmn:flowNodeRef>t6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Payment" name="CỔNG THANH TOÁN MOMO">
+        <bpmn:flowNodeRef>t9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Airline" name="HỆ THỐNG HÃNG BAY / GDS / CRS">
+        <bpmn:flowNodeRef>t10</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s1" name="Phát sinh nhu cầu đi lại">
+      <bpmn:outgoing>f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="t1" name="Nhập tiêu chí tìm kiếm (điểm đi, ngày, số khách)">
+      <bpmn:incoming>f1</bpmn:incoming>
+      <bpmn:incoming>f4b</bpmn:incoming>
+      <bpmn:outgoing>f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t2" name="Kiểm tra định dạng &amp; tiêu chí dữ liệu tìm kiếm">
+      <bpmn:incoming>f2</bpmn:incoming>
+      <bpmn:outgoing>f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g1" name="Dữ liệu hợp lệ?">
+      <bpmn:incoming>f3</bpmn:incoming>
+      <bpmn:outgoing>f4</bpmn:outgoing>
+      <bpmn:outgoing>f5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="t3" name="Hiển thị cảnh báo &amp; gợi ý sửa tiêu chí">
+      <bpmn:incoming>f4</bpmn:incoming>
+      <bpmn:outgoing>f4b</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t4" name="Lựa chọn chuyến bay &amp; nhập thông tin hành khách">
+      <bpmn:incoming>f5</bpmn:incoming>
+      <bpmn:outgoing>f6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t5" name="Tự động áp dụng mã ưu đãi &amp; dịch vụ ban đầu">
+      <bpmn:incoming>f6</bpmn:incoming>
+      <bpmn:outgoing>f7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t6" name="Gửi lệnh tạo PNR &amp; giữ chỗ tạm thời sang Hãng">
+      <bpmn:incoming>f7</bpmn:incoming>
+      <bpmn:outgoing>f8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g2" name="Có PNR giữ chỗ?">
+      <bpmn:incoming>f8</bpmn:incoming>
+      <bpmn:outgoing>f9</bpmn:outgoing>
+      <bpmn:outgoing>f10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="t7" name="Xác nhận nguồn tiền &amp; xác thực thanh toán (Biometrics/OTP)">
+      <bpmn:incoming>f9</bpmn:incoming>
+      <bpmn:outgoing>f11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t8" name="Xử lý hủy giữ chỗ &amp; thông báo hết thời hạn">
+      <bpmn:incoming>f10</bpmn:incoming>
+      <bpmn:outgoing>f16</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t9" name="Trích tiền tài khoản ví &amp; hạch toán tài chính">
+      <bpmn:incoming>f11</bpmn:incoming>
+      <bpmn:outgoing>f12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g4" name="Hạch toán OK?">
+      <bpmn:incoming>f12</bpmn:incoming>
+      <bpmn:outgoing>f13</bpmn:outgoing>
+      <bpmn:outgoing>f14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="t10" name="Gửi lệnh phát hành vé máy bay điện tử (e-Ticket)">
+      <bpmn:incoming>f13</bpmn:incoming>
+      <bpmn:outgoing>f15</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t11" name="Xử lý hoàn tiền ví &amp; thông báo lỗi xuất vé">
+      <bpmn:incoming>f14</bpmn:incoming>
+      <bpmn:outgoing>f17</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="e1" name="Đặt vé máy bay thành công &amp; Nhận e-Ticket">
+      <bpmn:incoming>f15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="e2" name="Hủy giữ chỗ - Kết thúc">
+      <bpmn:incoming>f16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="e3" name="Giao dịch lỗi - Hoàn tiền">
+      <bpmn:incoming>f17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" sourceRef="s1" targetRef="t1" />
+    <bpmn:sequenceFlow id="f2" sourceRef="t1" targetRef="t2" />
+    <bpmn:sequenceFlow id="f3" sourceRef="t2" targetRef="g1" />
+    <bpmn:sequenceFlow id="f4" name="Không" sourceRef="g1" targetRef="t3" />
+    <bpmn:sequenceFlow id="f4b" sourceRef="t3" targetRef="t1" />
+    <bpmn:sequenceFlow id="f5" name="Có" sourceRef="g1" targetRef="t4" />
+    <bpmn:sequenceFlow id="f6" sourceRef="t4" targetRef="t5" />
+    <bpmn:sequenceFlow id="f7" sourceRef="t5" targetRef="t6" />
+    <bpmn:sequenceFlow id="f8" sourceRef="t6" targetRef="g2" />
+    <bpmn:sequenceFlow id="f9" name="Có PNR" sourceRef="g2" targetRef="t7" />
+    <bpmn:sequenceFlow id="f10" name="Thất bại" sourceRef="g2" targetRef="t8" />
+    <bpmn:sequenceFlow id="f11" sourceRef="t7" targetRef="t9" />
+    <bpmn:sequenceFlow id="f12" sourceRef="t9" targetRef="g4" />
+    <bpmn:sequenceFlow id="f13" name="Thành công" sourceRef="g4" targetRef="t10" />
+    <bpmn:sequenceFlow id="f14" name="Lỗi / Không đủ tiền" sourceRef="g4" targetRef="t11" />
+    <bpmn:sequenceFlow id="f15" name="Đã xuất vé" sourceRef="t10" targetRef="e1" />
+    <bpmn:sequenceFlow id="f16" sourceRef="t8" targetRef="e2" />
+    <bpmn:sequenceFlow id="f17" sourceRef="t11" targetRef="e3" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Core01_TimKiem_LuaChon_ThanhToan">
+    <bpmndi:BPMNPlane id="Plane_Core01_TimKiem_LuaChon_ThanhToan" bpmnElement="Collab_Core01_TimKiem_LuaChon_ThanhToan">
+      <bpmndi:BPMNShape id="Part_Core01_TimKiem_LuaChon_ThanhToan_di" bpmnElement="Part_Core01_TimKiem_LuaChon_ThanhToan" isHorizontal="true">
+        <dc:Bounds x="160" y="60" width="3420" height="1200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Cust_di" bpmnElement="Lane_Cust" isHorizontal="true">
+        <dc:Bounds x="190" y="60" width="3390" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_App_di" bpmnElement="Lane_App" isHorizontal="true">
+        <dc:Bounds x="190" y="300" width="3390" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Backend_di" bpmnElement="Lane_Backend" isHorizontal="true">
+        <dc:Bounds x="190" y="540" width="3390" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Payment_di" bpmnElement="Lane_Payment" isHorizontal="true">
+        <dc:Bounds x="190" y="780" width="3390" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Airline_di" bpmnElement="Lane_Airline" isHorizontal="true">
+        <dc:Bounds x="190" y="1020" width="3390" height="240" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Nodes -->
+      <!-- Lane_Cust: cy = 180 -->
+      <bpmndi:BPMNShape id="s1_di" bpmnElement="s1">
+        <dc:Bounds x="230" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="207" y="208" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1">
+        <dc:Bounds x="330" y="135" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_App: cy = 420 -->
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2">
+        <dc:Bounds x="600" y="375" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true">
+        <dc:Bounds x="870" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="857" y="452" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3">
+        <dc:Bounds x="980" y="375" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Cust: cy = 180 -->
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4">
+        <dc:Bounds x="1250" y="135" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_App: cy = 420 -->
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5">
+        <dc:Bounds x="1520" y="375" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Backend: cy = 660 -->
+      <bpmndi:BPMNShape id="t6_di" bpmnElement="t6">
+        <dc:Bounds x="1790" y="615" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g2_di" bpmnElement="g2" isMarkerVisible="true">
+        <dc:Bounds x="2060" y="635" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2043" y="692" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Cust: cy = 180 -->
+      <bpmndi:BPMNShape id="t7_di" bpmnElement="t7">
+        <dc:Bounds x="2210" y="130" width="230" height="100" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Backend: cy = 660 -->
+      <bpmndi:BPMNShape id="t8_di" bpmnElement="t8">
+        <dc:Bounds x="2210" y="615" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e2_di" bpmnElement="e2">
+        <dc:Bounds x="2480" y="642" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2464" y="688" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Payment: cy = 900 -->
+      <bpmndi:BPMNShape id="t9_di" bpmnElement="t9">
+        <dc:Bounds x="2570" y="855" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g4_di" bpmnElement="g4" isMarkerVisible="true">
+        <dc:Bounds x="2840" y="875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2827" y="932" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t11_di" bpmnElement="t11">
+        <dc:Bounds x="3000" y="855" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e3_di" bpmnElement="e3">
+        <dc:Bounds x="3270" y="882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3255" y="928" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Airline: cy = 1140 -->
+      <bpmndi:BPMNShape id="t10_di" bpmnElement="t10">
+        <dc:Bounds x="3000" y="1095" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Lane_Cust: cy = 180 -->
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1">
+        <dc:Bounds x="3450" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3430" y="208" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Edges -->
+      <!-- f1: s1 -> t1 -->
+      <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
+        <di:waypoint x="266" y="180" />
+        <di:waypoint x="330" y="180" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f2: t1 -> t2 -->
+      <bpmndi:BPMNEdge id="f2_di" bpmnElement="f2">
+        <di:waypoint x="540" y="180" />
+        <di:waypoint x="570" y="180" />
+        <di:waypoint x="570" y="420" />
+        <di:waypoint x="600" y="420" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f3: t2 -> g1 -->
+      <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3">
+        <di:waypoint x="810" y="420" />
+        <di:waypoint x="870" y="420" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f4: g1 -> t3 (Không) -->
+      <bpmndi:BPMNEdge id="f4_di" bpmnElement="f4">
+        <di:waypoint x="920" y="420" />
+        <di:waypoint x="980" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="933" y="428" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f4b: t3 -> t1 (loop back via upper channel y=90) -->
+      <bpmndi:BPMNEdge id="f4b_di" bpmnElement="f4b">
+        <di:waypoint x="1085" y="375" />
+        <di:waypoint x="1085" y="90" />
+        <di:waypoint x="435" y="90" />
+        <di:waypoint x="435" y="135" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f5: g1 -> t4 (Có) -->
+      <bpmndi:BPMNEdge id="f5_di" bpmnElement="f5">
+        <di:waypoint x="895" y="395" />
+        <di:waypoint x="895" y="180" />
+        <di:waypoint x="1250" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="910" y="188" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f6: t4 -> t5 -->
+      <bpmndi:BPMNEdge id="f6_di" bpmnElement="f6">
+        <di:waypoint x="1460" y="180" />
+        <di:waypoint x="1490" y="180" />
+        <di:waypoint x="1490" y="420" />
+        <di:waypoint x="1520" y="420" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f7: t5 -> t6 -->
+      <bpmndi:BPMNEdge id="f7_di" bpmnElement="f7">
+        <di:waypoint x="1730" y="420" />
+        <di:waypoint x="1760" y="420" />
+        <di:waypoint x="1760" y="660" />
+        <di:waypoint x="1790" y="660" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f8: t6 -> g2 -->
+      <bpmndi:BPMNEdge id="f8_di" bpmnElement="f8">
+        <di:waypoint x="2000" y="660" />
+        <di:waypoint x="2060" y="660" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f9: g2 -> t7 (Có PNR) -->
+      <bpmndi:BPMNEdge id="f9_di" bpmnElement="f9">
+        <di:waypoint x="2085" y="635" />
+        <di:waypoint x="2085" y="180" />
+        <di:waypoint x="2210" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2100" y="188" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f10: g2 -> t8 (Thất bại) -->
+      <bpmndi:BPMNEdge id="f10_di" bpmnElement="f10">
+        <di:waypoint x="2110" y="660" />
+        <di:waypoint x="2210" y="660" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2140" y="668" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f16: t8 -> e2 -->
+      <bpmndi:BPMNEdge id="f16_di" bpmnElement="f16">
+        <di:waypoint x="2420" y="660" />
+        <di:waypoint x="2480" y="660" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f11: t7 -> t9 -->
+      <bpmndi:BPMNEdge id="f11_di" bpmnElement="f11">
+        <di:waypoint x="2440" y="180" />
+        <di:waypoint x="2540" y="180" />
+        <di:waypoint x="2540" y="900" />
+        <di:waypoint x="2570" y="900" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f12: t9 -> g4 -->
+      <bpmndi:BPMNEdge id="f12_di" bpmnElement="f12">
+        <di:waypoint x="2780" y="900" />
+        <di:waypoint x="2840" y="900" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f14: g4 -> t11 (Lỗi / Không đủ tiền) -->
+      <bpmndi:BPMNEdge id="f14_di" bpmnElement="f14">
+        <di:waypoint x="2890" y="900" />
+        <di:waypoint x="3000" y="900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2895" y="908" width="98" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f17: t11 -> e3 -->
+      <bpmndi:BPMNEdge id="f17_di" bpmnElement="f17">
+        <di:waypoint x="3210" y="900" />
+        <di:waypoint x="3270" y="900" />
+      </bpmndi:BPMNEdge>
+      
+      <!-- f13: g4 -> t10 (Thành công) -->
+      <bpmndi:BPMNEdge id="f13_di" bpmnElement="f13">
+        <di:waypoint x="2865" y="925" />
+        <di:waypoint x="2865" y="1140" />
+        <di:waypoint x="3000" y="1140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2880" y="1148" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      
+      <!-- f15: t10 -> e1 (Đã xuất vé) -->
+      <bpmndi:BPMNEdge id="f15_di" bpmnElement="f15">
+        <di:waypoint x="3210" y="1140" />
+        <di:waypoint x="3390" y="1140" />
+        <di:waypoint x="3390" y="180" />
+        <di:waypoint x="3450" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3398" y="660" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
