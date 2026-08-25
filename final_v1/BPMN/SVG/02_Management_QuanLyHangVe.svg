@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3935" height="1370" viewBox="120 40 3935 1370" font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'>
+<defs><marker id="seq-end" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 11 6 L 1 11 z" fill="#282828" stroke="#282828" stroke-linejoin="round"/></marker></defs>
+<rect x="120" y="40" width="3935" height="1370" fill="#ffffff"/>
+<rect x="160.0" y="80.0" width="3855.0" height="1290.0" fill="none" stroke="#282828" stroke-width="2"/>
+<text transform="rotate(-90 175.0 725.0)" x="175.0" y="725.0" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="#282828">Quy trình Quản lý Hạng vé Máy bay</text>
+<rect x="190.0" y="80.0" width="3825.0" height="360.0" fill="none" stroke="#282828" stroke-width="1"/>
+<text transform="rotate(-90 205.0 260.0)" x="205.0" y="260.0" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="#282828">Hãng bay / Nhà cung cấp (NCC)</text>
+<rect x="190.0" y="440.0" width="3825.0" height="360.0" fill="none" stroke="#282828" stroke-width="1"/>
+<text transform="rotate(-90 205.0 620.0)" x="205.0" y="620.0" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="#282828">Bộ phận Business Development (BD)</text>
+<rect x="190.0" y="800.0" width="3825.0" height="360.0" fill="none" stroke="#282828" stroke-width="1"/>
+<text transform="rotate(-90 205.0 980.0)" x="205.0" y="980.0" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="#282828">Bộ phận Ticketing (M_Service)</text>
+<rect x="190.0" y="1160.0" width="3825.0" height="210.0" fill="none" stroke="#282828" stroke-width="1"/>
+<text transform="rotate(-90 205.0 1265.0)" x="205.0" y="1265.0" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="#282828">Ứng dụng MoMo</text>
+<path d="M 365.0 185.0 L 467.0 185.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 617.0 185.0 L 712.0 185.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 762.0 185.0 L 857.0 185.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="809.5" y="179.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Quốc tế</text>
+<path d="M 1007.0 185.0 L 1030.0 185.0 L 1030.0 545.0 L 1052.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1202.0 545.0 L 1297.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1347.0 545.0 L 1492.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1419.5" y="539.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Thất bại</text>
+<path d="M 1542.0 545.0 L 1590.0 545.0 L 1590.0 695.0 L 1637.0 695.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1590.0" y="614.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Còn</text>
+<path d="M 1712.0 731.0 L 1712.0 777.0 L 1127.0 777.0 L 1127.0 581.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1542.0 545.0 L 1694.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1618.0" y="539.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Hết</text>
+<path d="M 762.0 185.0 L 810.0 185.0 L 810.0 335.0 L 857.0 335.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="810.0" y="254.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Nội địa</text>
+<path d="M 1007.0 335.0 L 1030.0 335.0 L 1030.0 695.0 L 1052.0 695.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1202.0 695.0 L 1297.0 695.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1347.0 695.0 L 1395.0 695.0 L 1395.0 185.0 L 1442.0 185.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1395.0" y="434.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không</text>
+<path d="M 1517.0 221.0 L 1517.0 417.0 L 932.0 417.0 L 932.0 371.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1347.0 695.0 L 1687.0 695.0 L 1687.0 545.0 L 2027.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1687.0" y="614.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có</text>
+<path d="M 2177.0 545.0 L 2222.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1347.0 545.0 L 1420.0 545.0 L 1420.0 905.0 L 1492.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1420.0" y="719.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Thành công</text>
+<path d="M 2297.0 581.0 L 2297.0 976.0 L 1517.0 976.0 L 1517.0 930.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1542.0 905.0 L 1637.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1787.0 905.0 L 1882.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 1932.0 905.0 L 1980.0 905.0 L 1980.0 545.0 L 2027.0 545.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1980.0" y="719.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không</text>
+<path d="M 1932.0 905.0 L 2027.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="1979.5" y="899.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có</text>
+<path d="M 2177.0 905.0 L 2200.0 905.0 L 2200.0 1265.0 L 2222.0 1265.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 2372.0 1265.0 L 2467.0 1265.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 2517.0 1265.0 L 3077.0 1265.0 L 3077.0 905.0 L 3637.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="3077.0" y="1079.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không</text>
+<path d="M 3687.0 905.0 L 3782.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 3857.0 941.0 L 3857.0 1347.0 L 2297.0 1347.0 L 2297.0 1301.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 2517.0 1265.0 L 2565.0 1265.0 L 2565.0 905.0 L 2612.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="2565.0" y="1079.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có</text>
+<path d="M 2762.0 905.0 L 2857.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 2907.0 905.0 L 3059.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="2983.0" y="899.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không</text>
+<path d="M 2907.0 905.0 L 2955.0 905.0 L 2955.0 1055.0 L 3002.0 1055.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="2955.0" y="974.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có</text>
+<path d="M 3152.0 1055.0 L 3175.0 1055.0 L 3175.0 905.0 L 3197.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 3347.0 905.0 L 3442.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<path d="M 3492.0 905.0 L 3637.0 905.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="3564.5" y="899.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có</text>
+<path d="M 3492.0 905.0 L 3568.0 905.0 L 3568.0 1265.0 L 3644.0 1265.0" fill="none" stroke="#282828" stroke-width="1.6" marker-end="url(#seq-end)"/>
+<text x="3568.0" y="1079.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không</text>
+<circle cx="347.0" cy="185.0" r="18.0" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="347.0" y="217.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Hãng phát hành hạng</text>
+<text x="347.0" y="230.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">vé mới</text>
+<rect x="467.0" y="149.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="542.0" y="178.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Tạo / Cập nhật thông</text>
+<text x="542.0" y="191.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">tin hạng vé</text>
+<path d="M 737.0 160.0 L 762.0 185.0 L 737.0 210.0 L 712.0 185.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 724.0 172.0 L 750.0 198.0 M 750.0 172.0 L 724.0 198.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="737.0" y="224.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Loại hãng?</text>
+<rect x="857.0" y="149.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="932.0" y="178.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Cung cấp dữ liệu</text>
+<text x="932.0" y="191.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">real-time qua API</text>
+<rect x="1052.0" y="509.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="1127.0" y="545.0" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Tích hợp API</text>
+<path d="M 1322.0 520.0 L 1347.0 545.0 L 1322.0 570.0 L 1297.0 545.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 1309.0 532.0 L 1335.0 558.0 M 1335.0 532.0 L 1309.0 558.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="1322.0" y="584.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Kết quả tích hợp?</text>
+<path d="M 1517.0 520.0 L 1542.0 545.0 L 1517.0 570.0 L 1492.0 545.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 1504.0 532.0 L 1530.0 558.0 M 1530.0 532.0 L 1504.0 558.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="1517.0" y="584.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Còn trong số lần cho</text>
+<text x="1517.0" y="597.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">phép (2 lần)?</text>
+<rect x="1637.0" y="659.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="1712.0" y="695.0" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Sửa lỗi tích hợp</text>
+<circle cx="1712.0" cy="545.0" r="18.0" fill="#ffffff" stroke="#282828" stroke-width="3.4"/>
+<text x="1712.0" y="577.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Không tích hợp được</text>
+<text x="1712.0" y="590.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">API</text>
+<rect x="857.0" y="299.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="932.0" y="328.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Gửi thông tin hạng vé</text>
+<text x="932.0" y="341.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">đến M_Service</text>
+<rect x="1052.0" y="659.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="1127.0" y="688.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Tiếp nhận và kiểm tra</text>
+<text x="1127.0" y="701.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">dữ liệu hạng vé</text>
+<path d="M 1322.0 670.0 L 1347.0 695.0 L 1322.0 720.0 L 1297.0 695.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 1309.0 682.0 L 1335.0 708.0 M 1335.0 682.0 L 1309.0 708.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="1322.0" y="734.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Thông tin đầy đủ và hợp</text>
+<text x="1322.0" y="747.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">lệ?</text>
+<rect x="1442.0" y="149.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="1517.0" y="178.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Chỉnh sửa / bổ sung</text>
+<text x="1517.0" y="191.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">thông tin hạng vé</text>
+<rect x="2027.0" y="509.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="2102.0" y="538.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Phân tích và đối chiếu</text>
+<text x="2102.0" y="551.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">thông tin hạng vé</text>
+<rect x="2222.0" y="509.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="2297.0" y="538.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Chuẩn hóa dữ liệu hạng</text>
+<text x="2297.0" y="551.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">vé</text>
+<path d="M 1517.0 880.0 L 1542.0 905.0 L 1517.0 930.0 L 1492.0 905.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 1504.0 892.0 L 1530.0 918.0 M 1530.0 892.0 L 1504.0 918.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<rect x="1637.0" y="869.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="1712.0" y="898.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Kiểm tra dữ liệu đã</text>
+<text x="1712.0" y="911.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">chuẩn hóa</text>
+<path d="M 1907.0 880.0 L 1932.0 905.0 L 1907.0 930.0 L 1882.0 905.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 1894.0 892.0 L 1920.0 918.0 M 1920.0 892.0 L 1894.0 918.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="1907.0" y="944.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Dữ liệu chuẩn hóa theo</text>
+<text x="1907.0" y="957.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">yêu cầu?</text>
+<rect x="2027.0" y="869.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="2102.0" y="898.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Cấu hình hạng vé lên</text>
+<text x="2102.0" y="911.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">hệ thống MoMo</text>
+<rect x="2222.0" y="1229.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="2297.0" y="1258.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Kiểm tra hiển thị định</text>
+<text x="2297.0" y="1271.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">dạng và cấu trúc</text>
+<path d="M 2492.0 1240.0 L 2517.0 1265.0 L 2492.0 1290.0 L 2467.0 1265.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 2479.0 1252.0 L 2505.0 1278.0 M 2505.0 1252.0 L 2479.0 1278.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="2492.0" y="1304.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Dữ liệu hiển thị hợp lệ?</text>
+<path d="M 3662.0 880.0 L 3687.0 905.0 L 3662.0 930.0 L 3637.0 905.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 3649.0 892.0 L 3675.0 918.0 M 3675.0 892.0 L 3649.0 918.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<rect x="3782.0" y="869.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="3857.0" y="898.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Xử lý lỗi và điều</text>
+<text x="3857.0" y="911.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">chỉnh</text>
+<rect x="2612.0" y="869.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="2687.0" y="898.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Phê duyệt công bố hạng</text>
+<text x="2687.0" y="911.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">vé</text>
+<path d="M 2882.0 880.0 L 2907.0 905.0 L 2882.0 930.0 L 2857.0 905.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 2869.0 892.0 L 2895.0 918.0 M 2895.0 892.0 L 2869.0 918.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="2882.0" y="944.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Quyết định công bố?</text>
+<circle cx="3077.0" cy="905.0" r="18.0" fill="#ffffff" stroke="#282828" stroke-width="3.4"/>
+<text x="3077.0" y="937.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Tạm hoãn / Hủy công</text>
+<text x="3077.0" y="950.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">bố hạng vé</text>
+<rect x="3002.0" y="1019.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="3077.0" y="1048.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Công bố hạng vé lên</text>
+<text x="3077.0" y="1061.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">App MoMo</text>
+<rect x="3197.0" y="869.0" width="150.0" height="72.0" rx="8" ry="8" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<text x="3272.0" y="898.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">Giám sát theo dõi sau</text>
+<text x="3272.0" y="911.5" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#282828">công bố</text>
+<path d="M 3467.0 880.0 L 3492.0 905.0 L 3467.0 930.0 L 3442.0 905.0 z" fill="#ffffff" stroke="#282828" stroke-width="1.8"/>
+<path d="M 3454.0 892.0 L 3480.0 918.0 M 3480.0 892.0 L 3454.0 918.0" stroke="#282828" stroke-width="2.6" fill="none"/>
+<text x="3467.0" y="944.0" text-anchor="middle" font-size="11" font-weight="500" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Có lỗi phát sinh?</text>
+<circle cx="3662.0" cy="1265.0" r="18.0" fill="#ffffff" stroke="#282828" stroke-width="3.4"/>
+<text x="3662.0" y="1297.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">Hạng vé hiển thị ổn</text>
+<text x="3662.0" y="1310.0" text-anchor="middle" font-size="11" fill="#282828" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">định trên MoMo</text>
+</svg>
