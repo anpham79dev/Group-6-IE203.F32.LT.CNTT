@@ -1,0 +1,549 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_XuatHoaDon" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration_06">
+    <bpmn:participant id="Participant_MoMo_VATInvoice" name="Quy trình Tự động hóa Xuất Hóa đơn điện tử (VAT)" processRef="Process_XuatHoaDon" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_XuatHoaDon" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_06">
+      <bpmn:lane id="Lane_KhachHang" name="Khách hàng">
+        <bpmn:flowNodeRef>Start_NhuCauVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_NhapFormVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_XemHoaDonVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_XuatVATThanhCong</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_AppMoMo" name="Ứng dụng MoMo">
+        <bpmn:flowNodeRef>Gateway_KenhYeuCauVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_KiemTraTrangThaiYeuCauVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_DaYeuCauChua</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_DaGuiYeuCauVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_HienThiFormNhapVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ThongTinNhapHopLe</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CapNhatTrangThaiVaThongBao</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_MService" name="Hệ thống Core M_Service">
+        <bpmn:flowNodeRef>Gateway_MergeNguonYeuCauVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_KiemTraThoiHan72h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ThoiHan72h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_QuaHanXuatVAT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DoiSoatDuLieuGiaoDich</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_DuLieuDoiSoatKhop</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TaoYeuCauXuatHoaDon</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_CSKH" name="Bộ phận CSKH">
+        <bpmn:flowNodeRef>Task_TiepNhanYeuCauVATTongDai</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_KiemTraDoiSoatLienHeKH</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_KeToan" name="Bộ phận Kế toán (M_Service)">
+        <bpmn:flowNodeRef>Task_GoiAPISangVACOM</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_VACOMTiepNhan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_GhiNhanLoiChuyenKT</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_VACOM" name="Hệ thống Hóa đơn điện tử VACOM">
+        <bpmn:flowNodeRef>Task_VACOMXuLyPhatHanh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_PhatHanhThanhCong</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CapNhatThatBaiVACOM</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_LoiPhatHanhHoaDon</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TraHoaDonDienTuVeMoMo</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_NhuCauVAT" name="Khách hàng yêu cầu xuất hóa đơn VAT">
+      <bpmn:outgoing>V_01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_KenhYeuCauVAT" name="Kênh liên hệ?">
+      <bpmn:incoming>V_01</bpmn:incoming>
+      <bpmn:outgoing>V_KenhApp</bpmn:outgoing>
+      <bpmn:outgoing>V_KenhCSKH</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_01" sourceRef="Start_NhuCauVAT" targetRef="Gateway_KenhYeuCauVAT" />
+    <bpmn:task id="Task_KiemTraTrangThaiYeuCauVAT" name="Kiểm tra trạng thái yêu cầu VAT">
+      <bpmn:incoming>V_KenhApp</bpmn:incoming>
+      <bpmn:outgoing>V_02</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_KenhApp" name="App MoMo" sourceRef="Gateway_KenhYeuCauVAT" targetRef="Task_KiemTraTrangThaiYeuCauVAT" />
+    <bpmn:exclusiveGateway id="Gateway_DaYeuCauChua" name="Giao dịch đã yêu cầu xuất VAT chưa?">
+      <bpmn:incoming>V_02</bpmn:incoming>
+      <bpmn:outgoing>V_DaYeuCau</bpmn:outgoing>
+      <bpmn:outgoing>V_ChuaYeuCau</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_02" sourceRef="Task_KiemTraTrangThaiYeuCauVAT" targetRef="Gateway_DaYeuCauChua" />
+    <bpmn:endEvent id="End_DaGuiYeuCauVAT" name="Hiển thị thông tin hóa đơn đã xuất">
+      <bpmn:incoming>V_DaYeuCau</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="V_DaYeuCau" name="Đã yêu cầu" sourceRef="Gateway_DaYeuCauChua" targetRef="End_DaGuiYeuCauVAT" />
+    <bpmn:task id="Task_HienThiFormNhapVAT" name="Hiển thị form nhập thông tin VAT">
+      <bpmn:incoming>V_ChuaYeuCau</bpmn:incoming>
+      <bpmn:incoming>V_NhapLaiForm</bpmn:incoming>
+      <bpmn:outgoing>V_03</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_ChuaYeuCau" name="Chưa yêu cầu" sourceRef="Gateway_DaYeuCauChua" targetRef="Task_HienThiFormNhapVAT" />
+    <bpmn:task id="Task_NhapFormVAT" name="Nhập MST, tên công ty, địa chỉ, email">
+      <bpmn:incoming>V_03</bpmn:incoming>
+      <bpmn:outgoing>V_04</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_03" sourceRef="Task_HienThiFormNhapVAT" targetRef="Task_NhapFormVAT" />
+    <bpmn:exclusiveGateway id="Gateway_ThongTinNhapHopLe" name="Thông tin nhập hợp lệ?">
+      <bpmn:incoming>V_04</bpmn:incoming>
+      <bpmn:outgoing>V_NhapLaiForm</bpmn:outgoing>
+      <bpmn:outgoing>V_FormHopLe</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_04" sourceRef="Task_NhapFormVAT" targetRef="Gateway_ThongTinNhapHopLe" />
+    <bpmn:sequenceFlow id="V_NhapLaiForm" name="Không hợp lệ" sourceRef="Gateway_ThongTinNhapHopLe" targetRef="Task_HienThiFormNhapVAT" />
+    <bpmn:task id="Task_TiepNhanYeuCauVATTongDai" name="CSKH tiếp nhận và nhập thông tin xuất VAT">
+      <bpmn:incoming>V_KenhCSKH</bpmn:incoming>
+      <bpmn:outgoing>V_ToMergeNguon1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_KenhCSKH" name="Tổng đài" sourceRef="Gateway_KenhYeuCauVAT" targetRef="Task_TiepNhanYeuCauVATTongDai" />
+    <bpmn:exclusiveGateway id="Gateway_MergeNguonYeuCauVAT">
+      <bpmn:incoming>V_FormHopLe</bpmn:incoming>
+      <bpmn:incoming>V_ToMergeNguon1</bpmn:incoming>
+      <bpmn:outgoing>V_05</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_FormHopLe" name="Hợp lệ" sourceRef="Gateway_ThongTinNhapHopLe" targetRef="Gateway_MergeNguonYeuCauVAT" />
+    <bpmn:sequenceFlow id="V_ToMergeNguon1" sourceRef="Task_TiepNhanYeuCauVATTongDai" targetRef="Gateway_MergeNguonYeuCauVAT" />
+    <bpmn:task id="Task_KiemTraThoiHan72h" name="Kiểm tra điều kiện thời hạn 72h">
+      <bpmn:incoming>V_05</bpmn:incoming>
+      <bpmn:outgoing>V_06</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_05" sourceRef="Gateway_MergeNguonYeuCauVAT" targetRef="Task_KiemTraThoiHan72h" />
+    <bpmn:exclusiveGateway id="Gateway_ThoiHan72h" name="Trong thời hạn 72h?">
+      <bpmn:incoming>V_06</bpmn:incoming>
+      <bpmn:outgoing>V_QuaHan72h</bpmn:outgoing>
+      <bpmn:outgoing>V_ConHan72h</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_06" sourceRef="Task_KiemTraThoiHan72h" targetRef="Gateway_ThoiHan72h" />
+    <bpmn:endEvent id="End_QuaHanXuatVAT" name="Từ chối do quá thời hạn 72 giờ">
+      <bpmn:incoming>V_QuaHan72h</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="V_QuaHan72h" name="Quá hạn" sourceRef="Gateway_ThoiHan72h" targetRef="End_QuaHanXuatVAT" />
+    <bpmn:task id="Task_DoiSoatDuLieuGiaoDich" name="Đối soát vé, thanh toán &amp; thông tin hóa đơn">
+      <bpmn:incoming>V_ConHan72h</bpmn:incoming>
+      <bpmn:incoming>V_DoiSoatLai</bpmn:incoming>
+      <bpmn:outgoing>V_07</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_ConHan72h" name="Còn hạn" sourceRef="Gateway_ThoiHan72h" targetRef="Task_DoiSoatDuLieuGiaoDich" />
+    <bpmn:exclusiveGateway id="Gateway_DuLieuDoiSoatKhop" name="Dữ liệu đối chiếu khớp?">
+      <bpmn:incoming>V_07</bpmn:incoming>
+      <bpmn:outgoing>V_KhongKhop</bpmn:outgoing>
+      <bpmn:outgoing>V_Khop</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_07" sourceRef="Task_DoiSoatDuLieuGiaoDich" targetRef="Gateway_DuLieuDoiSoatKhop" />
+    <bpmn:task id="Task_KiemTraDoiSoatLienHeKH" name="CSKH liên hệ khách hàng xác nhận &amp; cập nhật thông tin">
+      <bpmn:incoming>V_KhongKhop</bpmn:incoming>
+      <bpmn:outgoing>V_DoiSoatLai</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_KhongKhop" name="Không khớp" sourceRef="Gateway_DuLieuDoiSoatKhop" targetRef="Task_KiemTraDoiSoatLienHeKH" />
+    <bpmn:sequenceFlow id="V_DoiSoatLai" sourceRef="Task_KiemTraDoiSoatLienHeKH" targetRef="Task_DoiSoatDuLieuGiaoDich" />
+    <bpmn:task id="Task_TaoYeuCauXuatHoaDon" name="Tạo yêu cầu xuất hóa đơn chuyển Kế toán">
+      <bpmn:incoming>V_Khop</bpmn:incoming>
+      <bpmn:outgoing>V_08</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_Khop" name="Khớp" sourceRef="Gateway_DuLieuDoiSoatKhop" targetRef="Task_TaoYeuCauXuatHoaDon" />
+    <bpmn:task id="Task_GoiAPISangVACOM" name="Kế toán gọi API tạo hóa đơn sang VACOM">
+      <bpmn:incoming>V_08</bpmn:incoming>
+      <bpmn:incoming>V_ThuLaiVACOM</bpmn:incoming>
+      <bpmn:outgoing>V_09</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_08" sourceRef="Task_TaoYeuCauXuatHoaDon" targetRef="Task_GoiAPISangVACOM" />
+    <bpmn:exclusiveGateway id="Gateway_VACOMTiepNhan" name="VACOM tiếp nhận thành công?">
+      <bpmn:incoming>V_09</bpmn:incoming>
+      <bpmn:outgoing>V_VACOMTiepNhan_Khong</bpmn:outgoing>
+      <bpmn:outgoing>V_VACOMTiepNhan_Co</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_09" sourceRef="Task_GoiAPISangVACOM" targetRef="Gateway_VACOMTiepNhan" />
+    <bpmn:task id="Task_GhiNhanLoiChuyenKT" name="Ghi nhận lỗi API và gửi lại hoặc chuyển Kỹ thuật">
+      <bpmn:incoming>V_VACOMTiepNhan_Khong</bpmn:incoming>
+      <bpmn:outgoing>V_ThuLaiVACOM</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_VACOMTiepNhan_Khong" name="Thất bại" sourceRef="Gateway_VACOMTiepNhan" targetRef="Task_GhiNhanLoiChuyenKT" />
+    <bpmn:sequenceFlow id="V_ThuLaiVACOM" sourceRef="Task_GhiNhanLoiChuyenKT" targetRef="Task_GoiAPISangVACOM" />
+    <bpmn:task id="Task_VACOMXuLyPhatHanh" name="VACOM xử lý dữ liệu và ký số hóa đơn điện tử">
+      <bpmn:incoming>V_VACOMTiepNhan_Co</bpmn:incoming>
+      <bpmn:outgoing>V_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_VACOMTiepNhan_Co" name="Thành công" sourceRef="Gateway_VACOMTiepNhan" targetRef="Task_VACOMXuLyPhatHanh" />
+    <bpmn:exclusiveGateway id="Gateway_PhatHanhThanhCong" name="Hóa đơn phát hành thành công?">
+      <bpmn:incoming>V_10</bpmn:incoming>
+      <bpmn:outgoing>V_PhatHanh_Khong</bpmn:outgoing>
+      <bpmn:outgoing>V_PhatHanh_Co</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="V_10" sourceRef="Task_VACOMXuLyPhatHanh" targetRef="Gateway_PhatHanhThanhCong" />
+    <bpmn:task id="Task_CapNhatThatBaiVACOM" name="Cập nhật trạng thái lỗi và báo Kỹ thuật">
+      <bpmn:incoming>V_PhatHanh_Khong</bpmn:incoming>
+      <bpmn:outgoing>V_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_PhatHanh_Khong" name="Thất bại" sourceRef="Gateway_PhatHanhThanhCong" targetRef="Task_CapNhatThatBaiVACOM" />
+    <bpmn:endEvent id="End_LoiPhatHanhHoaDon" name="Xuất VAT thất bại - chuyển Kỹ thuật xử lý">
+      <bpmn:incoming>V_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="V_11" sourceRef="Task_CapNhatThatBaiVACOM" targetRef="End_LoiPhatHanhHoaDon" />
+    <bpmn:task id="Task_TraHoaDonDienTuVeMoMo" name="Truyền file hóa đơn điện tử (XML/PDF) về MoMo">
+      <bpmn:incoming>V_PhatHanh_Co</bpmn:incoming>
+      <bpmn:outgoing>V_12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_PhatHanh_Co" name="Thành công" sourceRef="Gateway_PhatHanhThanhCong" targetRef="Task_TraHoaDonDienTuVeMoMo" />
+    <bpmn:task id="Task_CapNhatTrangThaiVaThongBao" name="Lưu trữ CSDL, cập nhật App và gửi email cho KH">
+      <bpmn:incoming>V_12</bpmn:incoming>
+      <bpmn:outgoing>V_13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_12" sourceRef="Task_TraHoaDonDienTuVeMoMo" targetRef="Task_CapNhatTrangThaiVaThongBao" />
+    <bpmn:task id="Task_XemHoaDonVAT" name="Khách hàng xem / tải hóa đơn điện tử">
+      <bpmn:incoming>V_13</bpmn:incoming>
+      <bpmn:outgoing>V_14</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_13" sourceRef="Task_CapNhatTrangThaiVaThongBao" targetRef="Task_XemHoaDonVAT" />
+    <bpmn:endEvent id="End_XuatVATThanhCong" name="Xuất hóa đơn VAT hoàn tất">
+      <bpmn:incoming>V_14</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="V_14" sourceRef="Task_XemHoaDonVAT" targetRef="End_XuatVATThanhCong" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_XuatHoaDon">
+    <bpmndi:BPMNPlane id="Plane_Process_XuatHoaDon" bpmnElement="Collaboration_06">
+      <bpmndi:BPMNShape id="Participant_MoMo_VATInvoice_di" bpmnElement="Participant_MoMo_VATInvoice" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="4245" height="1710" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_KhachHang_di" bpmnElement="Lane_KhachHang" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="4215" height="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_AppMoMo_di" bpmnElement="Lane_AppMoMo" isHorizontal="true">
+        <dc:Bounds x="190" y="290" width="4215" height="360" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_MService_di" bpmnElement="Lane_MService" isHorizontal="true">
+        <dc:Bounds x="190" y="650" width="4215" height="360" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_CSKH_di" bpmnElement="Lane_CSKH" isHorizontal="true">
+        <dc:Bounds x="190" y="1010" width="4215" height="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_KeToan_di" bpmnElement="Lane_KeToan" isHorizontal="true">
+        <dc:Bounds x="190" y="1220" width="4215" height="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_VACOM_di" bpmnElement="Lane_VACOM" isHorizontal="true">
+        <dc:Bounds x="190" y="1430" width="4215" height="360" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_NhuCauVAT_di" bpmnElement="Start_NhuCauVAT">
+        <dc:Bounds x="329" y="167" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="287" y="209" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_KenhYeuCauVAT_di" bpmnElement="Gateway_KenhYeuCauVAT" isMarkerVisible="true">
+        <dc:Bounds x="517" y="370" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="426" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_KiemTraTrangThaiYeuCauVAT_di" bpmnElement="Task_KiemTraTrangThaiYeuCauVAT">
+        <dc:Bounds x="662" y="359" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_DaYeuCauChua_di" bpmnElement="Gateway_DaYeuCauChua" isMarkerVisible="true">
+        <dc:Bounds x="907" y="370" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872" y="426" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_DaGuiYeuCauVAT_di" bpmnElement="End_DaGuiYeuCauVAT">
+        <dc:Bounds x="1109" y="377" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1067" y="419" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_HienThiFormNhapVAT_di" bpmnElement="Task_HienThiFormNhapVAT">
+        <dc:Bounds x="1052" y="509" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NhapFormVAT_di" bpmnElement="Task_NhapFormVAT">
+        <dc:Bounds x="1247" y="149" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ThongTinNhapHopLe_di" bpmnElement="Gateway_ThongTinNhapHopLe" isMarkerVisible="true">
+        <dc:Bounds x="1492" y="370" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1457" y="426" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TiepNhanYeuCauVATTongDai_di" bpmnElement="Task_TiepNhanYeuCauVATTongDai">
+        <dc:Bounds x="662" y="1079" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_MergeNguonYeuCauVAT_di" bpmnElement="Gateway_MergeNguonYeuCauVAT" isMarkerVisible="true">
+        <dc:Bounds x="1687" y="730" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1652" y="786" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_KiemTraThoiHan72h_di" bpmnElement="Task_KiemTraThoiHan72h">
+        <dc:Bounds x="1832" y="719" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ThoiHan72h_di" bpmnElement="Gateway_ThoiHan72h" isMarkerVisible="true">
+        <dc:Bounds x="2077" y="730" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2042" y="786" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_QuaHanXuatVAT_di" bpmnElement="End_QuaHanXuatVAT">
+        <dc:Bounds x="2279" y="737" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2237" y="779" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DoiSoatDuLieuGiaoDich_di" bpmnElement="Task_DoiSoatDuLieuGiaoDich">
+        <dc:Bounds x="2222" y="869" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_DuLieuDoiSoatKhop_di" bpmnElement="Gateway_DuLieuDoiSoatKhop" isMarkerVisible="true">
+        <dc:Bounds x="2467" y="730" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2432" y="786" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_KiemTraDoiSoatLienHeKH_di" bpmnElement="Task_KiemTraDoiSoatLienHeKH">
+        <dc:Bounds x="2612" y="1079" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TaoYeuCauXuatHoaDon_di" bpmnElement="Task_TaoYeuCauXuatHoaDon">
+        <dc:Bounds x="2612" y="719" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GoiAPISangVACOM_di" bpmnElement="Task_GoiAPISangVACOM">
+        <dc:Bounds x="2807" y="1289" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_VACOMTiepNhan_di" bpmnElement="Gateway_VACOMTiepNhan" isMarkerVisible="true">
+        <dc:Bounds x="3052" y="1300" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3017" y="1356" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GhiNhanLoiChuyenKT_di" bpmnElement="Task_GhiNhanLoiChuyenKT">
+        <dc:Bounds x="3197" y="1289" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_VACOMXuLyPhatHanh_di" bpmnElement="Task_VACOMXuLyPhatHanh">
+        <dc:Bounds x="3197" y="1499" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_PhatHanhThanhCong_di" bpmnElement="Gateway_PhatHanhThanhCong" isMarkerVisible="true">
+        <dc:Bounds x="3442" y="1510" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3407" y="1566" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CapNhatThatBaiVACOM_di" bpmnElement="Task_CapNhatThatBaiVACOM">
+        <dc:Bounds x="3587" y="1499" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_LoiPhatHanhHoaDon_di" bpmnElement="End_LoiPhatHanhHoaDon">
+        <dc:Bounds x="3839" y="1517" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3797" y="1559" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TraHoaDonDienTuVeMoMo_di" bpmnElement="Task_TraHoaDonDienTuVeMoMo">
+        <dc:Bounds x="3587" y="1649" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CapNhatTrangThaiVaThongBao_di" bpmnElement="Task_CapNhatTrangThaiVaThongBao">
+        <dc:Bounds x="3782" y="359" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_XemHoaDonVAT_di" bpmnElement="Task_XemHoaDonVAT">
+        <dc:Bounds x="3977" y="149" width="150" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_XuatVATThanhCong_di" bpmnElement="End_XuatVATThanhCong">
+        <dc:Bounds x="4229" y="167" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4187" y="209" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="V_01_di" bpmnElement="V_01">
+        <di:waypoint x="365" y="185" />
+        <di:waypoint x="441" y="185" />
+        <di:waypoint x="441" y="395" />
+        <di:waypoint x="517" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_KenhApp_di" bpmnElement="V_KenhApp">
+        <di:waypoint x="567" y="395" />
+        <di:waypoint x="662" y="395" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="369" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_02_di" bpmnElement="V_02">
+        <di:waypoint x="812" y="395" />
+        <di:waypoint x="907" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_DaYeuCau_di" bpmnElement="V_DaYeuCau">
+        <di:waypoint x="957" y="395" />
+        <di:waypoint x="1109" y="395" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1064" y="369" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_ChuaYeuCau_di" bpmnElement="V_ChuaYeuCau">
+        <di:waypoint x="957" y="395" />
+        <di:waypoint x="1005" y="395" />
+        <di:waypoint x="1005" y="545" />
+        <di:waypoint x="1052" y="545" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="960" y="519" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_03_di" bpmnElement="V_03">
+        <di:waypoint x="1202" y="545" />
+        <di:waypoint x="1225" y="545" />
+        <di:waypoint x="1225" y="185" />
+        <di:waypoint x="1247" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_04_di" bpmnElement="V_04">
+        <di:waypoint x="1397" y="185" />
+        <di:waypoint x="1445" y="185" />
+        <di:waypoint x="1445" y="395" />
+        <di:waypoint x="1492" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_NhapLaiForm_di" bpmnElement="V_NhapLaiForm">
+        <di:waypoint x="1517" y="420" />
+        <di:waypoint x="1517" y="627" />
+        <di:waypoint x="1127" y="627" />
+        <di:waypoint x="1127" y="581" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1082" y="601" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_KenhCSKH_di" bpmnElement="V_KenhCSKH">
+        <di:waypoint x="567" y="395" />
+        <di:waypoint x="615" y="395" />
+        <di:waypoint x="615" y="1115" />
+        <di:waypoint x="662" y="1115" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="1089" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_FormHopLe_di" bpmnElement="V_FormHopLe">
+        <di:waypoint x="1542" y="395" />
+        <di:waypoint x="1615" y="395" />
+        <di:waypoint x="1615" y="755" />
+        <di:waypoint x="1687" y="755" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1570" y="729" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_ToMergeNguon1_di" bpmnElement="V_ToMergeNguon1">
+        <di:waypoint x="812" y="1115" />
+        <di:waypoint x="1250" y="1115" />
+        <di:waypoint x="1250" y="755" />
+        <di:waypoint x="1687" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_05_di" bpmnElement="V_05">
+        <di:waypoint x="1737" y="755" />
+        <di:waypoint x="1832" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_06_di" bpmnElement="V_06">
+        <di:waypoint x="1982" y="755" />
+        <di:waypoint x="2077" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_QuaHan72h_di" bpmnElement="V_QuaHan72h">
+        <di:waypoint x="2127" y="755" />
+        <di:waypoint x="2279" y="755" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2234" y="729" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_ConHan72h_di" bpmnElement="V_ConHan72h">
+        <di:waypoint x="2127" y="755" />
+        <di:waypoint x="2175" y="755" />
+        <di:waypoint x="2175" y="905" />
+        <di:waypoint x="2222" y="905" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2130" y="879" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_07_di" bpmnElement="V_07">
+        <di:waypoint x="2372" y="905" />
+        <di:waypoint x="2420" y="905" />
+        <di:waypoint x="2420" y="755" />
+        <di:waypoint x="2467" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_KhongKhop_di" bpmnElement="V_KhongKhop">
+        <di:waypoint x="2517" y="755" />
+        <di:waypoint x="2565" y="755" />
+        <di:waypoint x="2565" y="1115" />
+        <di:waypoint x="2612" y="1115" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2520" y="1089" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_DoiSoatLai_di" bpmnElement="V_DoiSoatLai">
+        <di:waypoint x="2687" y="1151" />
+        <di:waypoint x="2687" y="1197" />
+        <di:waypoint x="2297" y="1197" />
+        <di:waypoint x="2297" y="941" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_Khop_di" bpmnElement="V_Khop">
+        <di:waypoint x="2517" y="755" />
+        <di:waypoint x="2612" y="755" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2567" y="729" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_08_di" bpmnElement="V_08">
+        <di:waypoint x="2762" y="755" />
+        <di:waypoint x="2785" y="755" />
+        <di:waypoint x="2785" y="1325" />
+        <di:waypoint x="2807" y="1325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_09_di" bpmnElement="V_09">
+        <di:waypoint x="2957" y="1325" />
+        <di:waypoint x="3052" y="1325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_VACOMTiepNhan_Khong_di" bpmnElement="V_VACOMTiepNhan_Khong">
+        <di:waypoint x="3102" y="1325" />
+        <di:waypoint x="3197" y="1325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3152" y="1299" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_ThuLaiVACOM_di" bpmnElement="V_ThuLaiVACOM">
+        <di:waypoint x="3272" y="1361" />
+        <di:waypoint x="3272" y="1407" />
+        <di:waypoint x="2882" y="1407" />
+        <di:waypoint x="2882" y="1361" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_VACOMTiepNhan_Co_di" bpmnElement="V_VACOMTiepNhan_Co">
+        <di:waypoint x="3102" y="1325" />
+        <di:waypoint x="3150" y="1325" />
+        <di:waypoint x="3150" y="1535" />
+        <di:waypoint x="3197" y="1535" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3105" y="1509" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_10_di" bpmnElement="V_10">
+        <di:waypoint x="3347" y="1535" />
+        <di:waypoint x="3442" y="1535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_PhatHanh_Khong_di" bpmnElement="V_PhatHanh_Khong">
+        <di:waypoint x="3492" y="1535" />
+        <di:waypoint x="3587" y="1535" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3542" y="1509" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_11_di" bpmnElement="V_11">
+        <di:waypoint x="3737" y="1535" />
+        <di:waypoint x="3839" y="1535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_PhatHanh_Co_di" bpmnElement="V_PhatHanh_Co">
+        <di:waypoint x="3492" y="1535" />
+        <di:waypoint x="3540" y="1535" />
+        <di:waypoint x="3540" y="1685" />
+        <di:waypoint x="3587" y="1685" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3495" y="1659" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_12_di" bpmnElement="V_12">
+        <di:waypoint x="3737" y="1685" />
+        <di:waypoint x="3760" y="1685" />
+        <di:waypoint x="3760" y="395" />
+        <di:waypoint x="3782" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_13_di" bpmnElement="V_13">
+        <di:waypoint x="3932" y="395" />
+        <di:waypoint x="3955" y="395" />
+        <di:waypoint x="3955" y="185" />
+        <di:waypoint x="3977" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="V_14_di" bpmnElement="V_14">
+        <di:waypoint x="4127" y="185" />
+        <di:waypoint x="4229" y="185" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
