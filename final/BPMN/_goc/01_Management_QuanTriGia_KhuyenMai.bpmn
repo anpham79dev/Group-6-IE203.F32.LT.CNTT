@@ -31,7 +31,7 @@
         <bpmn:flowNodeRef>Gateway_PheDuyetChinhSach</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_KiemTraHoSoDieuKien</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_HoSoDayDu</bpmn:flowNodeRef>
-      <bpmn:flowNodeRef>End_TuChoiChinhSach</bpmn:flowNodeRef></bpmn:lane>
+      </bpmn:lane>
       <bpmn:lane id="Lane_KyThuat" name="Bộ phận Growth Specialist / Kỹ thuật">
         <bpmn:flowNodeRef>Gateway_MergeChinhSach</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TiepNhanChinhSachGia</bpmn:flowNodeRef>
@@ -123,7 +123,7 @@
       <bpmn:incoming>Flow_PheDuyet_Khong</bpmn:incoming>
       <bpmn:outgoing>Flow_DieuChinhMKTXong</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:endEvent id="End_TuChoiChinhSach" name="Hủy / Từ chối chính sách giá – KM"><bpmn:incoming>Flow_TuChoiThamDinh</bpmn:incoming><bpmn:incoming>Flow_HoSoKhongDat</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="Flow_PhuHop_Khong" name="Không" sourceRef="Gateway_PhuHopKHTieu" targetRef="Task_DieuChinhMucTieuKM" />
+    <bpmn:sequenceFlow id="Flow_PhuHop_Khong" name="Không" sourceRef="Gateway_PhuHopKHTieu" targetRef="Task_DieuChinhMucTieuKM" />
     <bpmn:sequenceFlow id="Flow_DieuChinhMKTXong" sourceRef="Task_DieuChinhMucTieuKM" targetRef="Task_PhanTichKH_ChienDich" />
     <bpmn:task id="Task_ThietKeCoCheKM" name="Thiết kế cơ chế khuyến mãi và điều kiện áp dụng">
       <bpmn:incoming>Flow_PhuHop_Co</bpmn:incoming>
@@ -145,9 +145,9 @@
       <bpmn:incoming>Flow_09</bpmn:incoming>
       <bpmn:outgoing>Flow_PheDuyet_Khong</bpmn:outgoing>
       <bpmn:outgoing>Flow_PheDuyet_Co</bpmn:outgoing>
-    <bpmn:outgoing>Flow_TuChoiThamDinh</bpmn:outgoing></bpmn:exclusiveGateway>
+    </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_09" sourceRef="Task_ThamDinhChinhSachKM" targetRef="Gateway_PheDuyetChinhSach" />
-    <bpmn:sequenceFlow id="Flow_PheDuyet_Khong" name="Cần điều chỉnh" sourceRef="Gateway_PheDuyetChinhSach" targetRef="Task_DieuChinhMucTieuKM" />
+    <bpmn:sequenceFlow id="Flow_PheDuyet_Khong" name="Không" sourceRef="Gateway_PheDuyetChinhSach" targetRef="Task_DieuChinhMucTieuKM" />
     <bpmn:task id="Task_KiemTraHoSoDieuKien" name="Kiểm tra hồ sơ điều kiện">
       <bpmn:incoming>Flow_PheDuyet_Co</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
@@ -157,9 +157,9 @@
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_HoSo_Khong</bpmn:outgoing>
       <bpmn:outgoing>Flow_HoSo_Co</bpmn:outgoing>
-    <bpmn:outgoing>Flow_HoSoKhongDat</bpmn:outgoing></bpmn:exclusiveGateway>
+    </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_KiemTraHoSoDieuKien" targetRef="Gateway_HoSoDayDu" />
-    <bpmn:sequenceFlow id="Flow_HoSo_Khong" name="Thiếu – yêu cầu bổ sung" sourceRef="Gateway_HoSoDayDu" targetRef="Task_BoSungHoSoDieuKien" />
+    <bpmn:sequenceFlow id="Flow_HoSo_Khong" name="Không" sourceRef="Gateway_HoSoDayDu" targetRef="Task_BoSungHoSoDieuKien" />
     <bpmn:task id="Task_TiepNhanChinhSachKM" name="Tiếp nhận chính sách giá / KM">
       <bpmn:incoming>Flow_HoSo_Co</bpmn:incoming>
       <bpmn:outgoing>Flow_ToMerge2</bpmn:outgoing>
@@ -204,7 +204,7 @@
       <bpmn:incoming>Flow_15</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_CongBoGiaKM" targetRef="EndEvent_CongBoThanhCong" />
-  <bpmn:sequenceFlow id="Flow_TuChoiThamDinh" sourceRef="Gateway_PheDuyetChinhSach" targetRef="End_TuChoiChinhSach" name="Từ chối" /><bpmn:sequenceFlow id="Flow_HoSoKhongDat" sourceRef="Gateway_HoSoDayDu" targetRef="End_TuChoiChinhSach" name="Không bổ sung được" /></bpmn:process>
+  </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_QuanTriGia">
     <bpmndi:BPMNPlane id="Plane_Process_QuanTriGia" bpmnElement="Collaboration_01">
       <bpmndi:BPMNShape id="Participant_MoMo_Pricing_di" bpmnElement="Participant_MoMo_Pricing" isHorizontal="true">
@@ -553,6 +553,6 @@
         <di:waypoint x="4763" y="1235" />
         <di:waypoint x="4814" y="1235" />
       </bpmndi:BPMNEdge>
-    <bpmndi:BPMNShape id="End_TuChoiChinhSach_di" bpmnElement="End_TuChoiChinhSach"><dc:Bounds x="3452" y="797" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="3498" y="794" width="150" height="48" /></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNEdge id="Flow_TuChoiThamDinh_di" bpmnElement="Flow_TuChoiThamDinh"><di:waypoint x="2882" y="840" /><di:waypoint x="2882" y="895" /><di:waypoint x="3470" y="895" /><di:waypoint x="3470" y="833" /><bpmndi:BPMNLabel><dc:Bounds x="3040" y="866" width="60" height="20" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="Flow_HoSoKhongDat_di" bpmnElement="Flow_HoSoKhongDat"><di:waypoint x="3297" y="815" /><di:waypoint x="3452" y="815" /><bpmndi:BPMNLabel><dc:Bounds x="3305" y="782" width="140" height="26" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge></bpmndi:BPMNPlane>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

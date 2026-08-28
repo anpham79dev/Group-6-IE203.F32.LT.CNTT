@@ -28,7 +28,7 @@
         <bpmn:flowNodeRef>Task_DoiSoatDuLieuGiaoDich</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_DuLieuDoiSoatKhop</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TaoYeuCauXuatHoaDon</bpmn:flowNodeRef>
-      <bpmn:flowNodeRef>Gateway_LaySongSong</bpmn:flowNodeRef><bpmn:flowNodeRef>Task_LayDuLieuVeThanhToan</bpmn:flowNodeRef><bpmn:flowNodeRef>Task_LayDuLieuKHVaYeuCau</bpmn:flowNodeRef><bpmn:flowNodeRef>Gateway_GopDuLieu</bpmn:flowNodeRef></bpmn:lane>
+      </bpmn:lane>
       <bpmn:lane id="Lane_CSKH" name="Bộ phận CSKH">
         <bpmn:flowNodeRef>Task_TiepNhanYeuCauVATTongDai</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_KiemTraDoiSoatLienHeKH</bpmn:flowNodeRef>
@@ -37,8 +37,8 @@
         <bpmn:flowNodeRef>Task_GoiAPISangVACOM</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_VACOMTiepNhan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_GhiNhanLoiChuyenKT</bpmn:flowNodeRef>
-      <bpmn:flowNodeRef>Gateway_ConLuotGuiLai</bpmn:flowNodeRef><bpmn:flowNodeRef>End_HetLuotGoiAPI</bpmn:flowNodeRef></bpmn:lane>
-      <bpmn:lane id="Lane_VACOM" name="Hệ thống Hóa đơn điện tử của đối tác">
+      </bpmn:lane>
+      <bpmn:lane id="Lane_VACOM" name="Hệ thống Hóa đơn điện tử VACOM">
         <bpmn:flowNodeRef>Task_VACOMXuLyPhatHanh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_PhatHanhThanhCong</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CapNhatThatBaiVACOM</bpmn:flowNodeRef>
@@ -115,11 +115,12 @@
       <bpmn:incoming>V_QuaHan72h</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="V_QuaHan72h" name="Quá hạn" sourceRef="Gateway_ThoiHan72h" targetRef="End_QuaHanXuatVAT" />
-    <bpmn:task id="Task_DoiSoatDuLieuGiaoDich" name="Ghép dữ liệu và đối soát khớp">
+    <bpmn:task id="Task_DoiSoatDuLieuGiaoDich" name="Đối soát vé, thanh toán &amp; thông tin hóa đơn">
+      <bpmn:incoming>V_ConHan72h</bpmn:incoming>
       <bpmn:incoming>V_DoiSoatLai</bpmn:incoming>
       <bpmn:outgoing>V_07</bpmn:outgoing>
-    <bpmn:incoming>V_ToDoiSoat</bpmn:incoming></bpmn:task>
-    <bpmn:parallelGateway id="Gateway_LaySongSong"><bpmn:incoming>V_ConHan72h</bpmn:incoming><bpmn:outgoing>V_AND_A1</bpmn:outgoing><bpmn:outgoing>V_AND_B1</bpmn:outgoing></bpmn:parallelGateway><bpmn:task id="Task_LayDuLieuVeThanhToan" name="Lấy dữ liệu vé và giao dịch thanh toán"><bpmn:incoming>V_AND_A1</bpmn:incoming><bpmn:outgoing>V_AND_A2</bpmn:outgoing></bpmn:task><bpmn:task id="Task_LayDuLieuKHVaYeuCau" name="Lấy thông tin khách hàng và nội dung yêu cầu"><bpmn:incoming>V_AND_B1</bpmn:incoming><bpmn:outgoing>V_AND_B2</bpmn:outgoing></bpmn:task><bpmn:parallelGateway id="Gateway_GopDuLieu"><bpmn:incoming>V_AND_A2</bpmn:incoming><bpmn:incoming>V_AND_B2</bpmn:incoming><bpmn:outgoing>V_ToDoiSoat</bpmn:outgoing></bpmn:parallelGateway><bpmn:exclusiveGateway id="Gateway_ConLuotGuiLai" name="Còn lượt gửi lại? (tối đa 2 lần)"><bpmn:incoming>V_ThuLaiVACOM</bpmn:incoming><bpmn:outgoing>V_ConLuotGuiLai</bpmn:outgoing><bpmn:outgoing>V_HetLuotGuiLai</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:endEvent id="End_HetLuotGoiAPI" name="Hết lượt gửi lại – chuyển Kỹ thuật xử lý"><bpmn:incoming>V_HetLuotGuiLai</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="V_ConHan72h" name="Còn hạn" sourceRef="Gateway_ThoiHan72h" targetRef="Gateway_LaySongSong" />
+    </bpmn:task>
+    <bpmn:sequenceFlow id="V_ConHan72h" name="Còn hạn" sourceRef="Gateway_ThoiHan72h" targetRef="Task_DoiSoatDuLieuGiaoDich" />
     <bpmn:exclusiveGateway id="Gateway_DuLieuDoiSoatKhop" name="Dữ liệu đối chiếu khớp?">
       <bpmn:incoming>V_07</bpmn:incoming>
       <bpmn:outgoing>V_KhongKhop</bpmn:outgoing>
@@ -137,24 +138,25 @@
       <bpmn:outgoing>V_08</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="V_Khop" name="Khớp" sourceRef="Gateway_DuLieuDoiSoatKhop" targetRef="Task_TaoYeuCauXuatHoaDon" />
-    <bpmn:task id="Task_GoiAPISangVACOM" name="Kế toán gọi API tạo hóa đơn sang hệ thống đối tác">
+    <bpmn:task id="Task_GoiAPISangVACOM" name="Kế toán gọi API tạo hóa đơn sang VACOM">
       <bpmn:incoming>V_08</bpmn:incoming>
+      <bpmn:incoming>V_ThuLaiVACOM</bpmn:incoming>
       <bpmn:outgoing>V_09</bpmn:outgoing>
-    <bpmn:incoming>V_ConLuotGuiLai</bpmn:incoming></bpmn:task>
+    </bpmn:task>
     <bpmn:sequenceFlow id="V_08" sourceRef="Task_TaoYeuCauXuatHoaDon" targetRef="Task_GoiAPISangVACOM" />
-    <bpmn:exclusiveGateway id="Gateway_VACOMTiepNhan" name="Đối tác tiếp nhận thành công?">
+    <bpmn:exclusiveGateway id="Gateway_VACOMTiepNhan" name="VACOM tiếp nhận thành công?">
       <bpmn:incoming>V_09</bpmn:incoming>
       <bpmn:outgoing>V_VACOMTiepNhan_Khong</bpmn:outgoing>
       <bpmn:outgoing>V_VACOMTiepNhan_Co</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="V_09" sourceRef="Task_GoiAPISangVACOM" targetRef="Gateway_VACOMTiepNhan" />
-    <bpmn:task id="Task_GhiNhanLoiChuyenKT" name="Ghi nhận lỗi API và chuẩn bị gửi lại">
+    <bpmn:task id="Task_GhiNhanLoiChuyenKT" name="Ghi nhận lỗi API và gửi lại hoặc chuyển Kỹ thuật">
       <bpmn:incoming>V_VACOMTiepNhan_Khong</bpmn:incoming>
       <bpmn:outgoing>V_ThuLaiVACOM</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="V_VACOMTiepNhan_Khong" name="Thất bại" sourceRef="Gateway_VACOMTiepNhan" targetRef="Task_GhiNhanLoiChuyenKT" />
-    <bpmn:sequenceFlow id="V_ThuLaiVACOM" sourceRef="Task_GhiNhanLoiChuyenKT" targetRef="Gateway_ConLuotGuiLai" />
-    <bpmn:task id="Task_VACOMXuLyPhatHanh" name="Đối tác xử lý dữ liệu và ký số hóa đơn điện tử">
+    <bpmn:sequenceFlow id="V_ThuLaiVACOM" sourceRef="Task_GhiNhanLoiChuyenKT" targetRef="Task_GoiAPISangVACOM" />
+    <bpmn:task id="Task_VACOMXuLyPhatHanh" name="VACOM xử lý dữ liệu và ký số hóa đơn điện tử">
       <bpmn:incoming>V_VACOMTiepNhan_Co</bpmn:incoming>
       <bpmn:outgoing>V_10</bpmn:outgoing>
     </bpmn:task>
@@ -193,29 +195,29 @@
       <bpmn:incoming>V_14</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="V_14" sourceRef="Task_XemHoaDonVAT" targetRef="End_XuatVATThanhCong" />
-  <bpmn:sequenceFlow id="V_AND_A1" sourceRef="Gateway_LaySongSong" targetRef="Task_LayDuLieuVeThanhToan" /><bpmn:sequenceFlow id="V_AND_B1" sourceRef="Gateway_LaySongSong" targetRef="Task_LayDuLieuKHVaYeuCau" /><bpmn:sequenceFlow id="V_AND_A2" sourceRef="Task_LayDuLieuVeThanhToan" targetRef="Gateway_GopDuLieu" /><bpmn:sequenceFlow id="V_AND_B2" sourceRef="Task_LayDuLieuKHVaYeuCau" targetRef="Gateway_GopDuLieu" /><bpmn:sequenceFlow id="V_ToDoiSoat" sourceRef="Gateway_GopDuLieu" targetRef="Task_DoiSoatDuLieuGiaoDich" /><bpmn:sequenceFlow id="V_ConLuotGuiLai" sourceRef="Gateway_ConLuotGuiLai" targetRef="Task_GoiAPISangVACOM" name="Còn lượt" /><bpmn:sequenceFlow id="V_HetLuotGuiLai" sourceRef="Gateway_ConLuotGuiLai" targetRef="End_HetLuotGoiAPI" name="Hết lượt" /></bpmn:process>
+  </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_XuatHoaDon">
     <bpmndi:BPMNPlane id="Plane_Process_XuatHoaDon" bpmnElement="Collaboration_06">
       <bpmndi:BPMNShape id="Participant_MoMo_VATInvoice_di" bpmnElement="Participant_MoMo_VATInvoice" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="4805" height="1710" />
+        <dc:Bounds x="160" y="80" width="4245" height="1710" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_KhachHang_di" bpmnElement="Lane_KhachHang" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="4775" height="210" />
+        <dc:Bounds x="190" y="80" width="4215" height="210" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_AppMoMo_di" bpmnElement="Lane_AppMoMo" isHorizontal="true">
-        <dc:Bounds x="190" y="290" width="4775" height="360" />
+        <dc:Bounds x="190" y="290" width="4215" height="360" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_MService_di" bpmnElement="Lane_MService" isHorizontal="true">
-        <dc:Bounds x="190" y="650" width="4775" height="360" />
+        <dc:Bounds x="190" y="650" width="4215" height="360" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_CSKH_di" bpmnElement="Lane_CSKH" isHorizontal="true">
-        <dc:Bounds x="190" y="1010" width="4775" height="210" />
+        <dc:Bounds x="190" y="1010" width="4215" height="210" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_KeToan_di" bpmnElement="Lane_KeToan" isHorizontal="true">
-        <dc:Bounds x="190" y="1220" width="4775" height="210" />
+        <dc:Bounds x="190" y="1220" width="4215" height="210" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_VACOM_di" bpmnElement="Lane_VACOM" isHorizontal="true">
-        <dc:Bounds x="190" y="1430" width="4775" height="360" />
+        <dc:Bounds x="190" y="1430" width="4215" height="360" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Start_NhuCauVAT_di" bpmnElement="Start_NhuCauVAT">
         <dc:Bounds x="329" y="167" width="36" height="36" />
@@ -281,63 +283,63 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_DoiSoatDuLieuGiaoDich_di" bpmnElement="Task_DoiSoatDuLieuGiaoDich">
-        <dc:Bounds x="2785" y="855" width="150" height="72" />
+        <dc:Bounds x="2222" y="869" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_DuLieuDoiSoatKhop_di" bpmnElement="Gateway_DuLieuDoiSoatKhop" isMarkerVisible="true">
-        <dc:Bounds x="3027" y="730" width="50" height="50" />
+        <dc:Bounds x="2467" y="730" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2992" y="786" width="120" height="30" />
+          <dc:Bounds x="2432" y="786" width="120" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_KiemTraDoiSoatLienHeKH_di" bpmnElement="Task_KiemTraDoiSoatLienHeKH">
-        <dc:Bounds x="3172" y="1079" width="150" height="72" />
+        <dc:Bounds x="2612" y="1079" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_TaoYeuCauXuatHoaDon_di" bpmnElement="Task_TaoYeuCauXuatHoaDon">
-        <dc:Bounds x="3172" y="719" width="150" height="72" />
+        <dc:Bounds x="2612" y="719" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_GoiAPISangVACOM_di" bpmnElement="Task_GoiAPISangVACOM">
-        <dc:Bounds x="3367" y="1289" width="150" height="72" />
+        <dc:Bounds x="2807" y="1289" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_VACOMTiepNhan_di" bpmnElement="Gateway_VACOMTiepNhan" isMarkerVisible="true">
-        <dc:Bounds x="3612" y="1300" width="50" height="50" />
+        <dc:Bounds x="3052" y="1300" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3577" y="1356" width="120" height="30" />
+          <dc:Bounds x="3017" y="1356" width="120" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_GhiNhanLoiChuyenKT_di" bpmnElement="Task_GhiNhanLoiChuyenKT">
-        <dc:Bounds x="3757" y="1289" width="150" height="72" />
+        <dc:Bounds x="3197" y="1289" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_VACOMXuLyPhatHanh_di" bpmnElement="Task_VACOMXuLyPhatHanh">
-        <dc:Bounds x="3757" y="1499" width="150" height="72" />
+        <dc:Bounds x="3197" y="1499" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_PhatHanhThanhCong_di" bpmnElement="Gateway_PhatHanhThanhCong" isMarkerVisible="true">
-        <dc:Bounds x="4002" y="1510" width="50" height="50" />
+        <dc:Bounds x="3442" y="1510" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3967" y="1566" width="120" height="30" />
+          <dc:Bounds x="3407" y="1566" width="120" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CapNhatThatBaiVACOM_di" bpmnElement="Task_CapNhatThatBaiVACOM">
-        <dc:Bounds x="4147" y="1499" width="150" height="72" />
+        <dc:Bounds x="3587" y="1499" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_LoiPhatHanhHoaDon_di" bpmnElement="End_LoiPhatHanhHoaDon">
-        <dc:Bounds x="4399" y="1517" width="36" height="36" />
+        <dc:Bounds x="3839" y="1517" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4357" y="1559" width="120" height="30" />
+          <dc:Bounds x="3797" y="1559" width="120" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_TraHoaDonDienTuVeMoMo_di" bpmnElement="Task_TraHoaDonDienTuVeMoMo">
-        <dc:Bounds x="4147" y="1649" width="150" height="72" />
+        <dc:Bounds x="3587" y="1649" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CapNhatTrangThaiVaThongBao_di" bpmnElement="Task_CapNhatTrangThaiVaThongBao">
-        <dc:Bounds x="4342" y="359" width="150" height="72" />
+        <dc:Bounds x="3782" y="359" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_XemHoaDonVAT_di" bpmnElement="Task_XemHoaDonVAT">
-        <dc:Bounds x="4537" y="149" width="150" height="72" />
+        <dc:Bounds x="3977" y="149" width="150" height="72" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_XuatVATThanhCong_di" bpmnElement="End_XuatVATThanhCong">
-        <dc:Bounds x="4789" y="167" width="36" height="36" />
+        <dc:Bounds x="4229" y="167" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4747" y="209" width="120" height="30" />
+          <dc:Bounds x="4187" y="209" width="120" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="V_01_di" bpmnElement="V_01">
@@ -434,98 +436,114 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_ConHan72h_di" bpmnElement="V_ConHan72h">
-        <di:waypoint x="2102" y="780" /><di:waypoint x="2102" y="891" /><di:waypoint x="2400" y="891" /><bpmndi:BPMNLabel>
-          <dc:Bounds x="2112" y="845" width="90" height="22" />
+        <di:waypoint x="2127" y="755" />
+        <di:waypoint x="2175" y="755" />
+        <di:waypoint x="2175" y="905" />
+        <di:waypoint x="2222" y="905" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2130" y="879" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_07_di" bpmnElement="V_07">
-        <di:waypoint x="2935" y="891" /><di:waypoint x="2981" y="891" /><di:waypoint x="2981" y="755" /><di:waypoint x="3027" y="755" /></bpmndi:BPMNEdge>
+        <di:waypoint x="2372" y="905" />
+        <di:waypoint x="2420" y="905" />
+        <di:waypoint x="2420" y="755" />
+        <di:waypoint x="2467" y="755" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_KhongKhop_di" bpmnElement="V_KhongKhop">
-        <di:waypoint x="3077" y="755" />
-        <di:waypoint x="3125" y="755" />
-        <di:waypoint x="3125" y="1115" />
-        <di:waypoint x="3172" y="1115" />
+        <di:waypoint x="2517" y="755" />
+        <di:waypoint x="2565" y="755" />
+        <di:waypoint x="2565" y="1115" />
+        <di:waypoint x="2612" y="1115" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3080" y="1089" width="90" height="22" />
+          <dc:Bounds x="2520" y="1089" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_DoiSoatLai_di" bpmnElement="V_DoiSoatLai">
-        <di:waypoint x="3172" y="1115" /><di:waypoint x="2860" y="1115" /><di:waypoint x="2860" y="927" /></bpmndi:BPMNEdge>
+        <di:waypoint x="2687" y="1151" />
+        <di:waypoint x="2687" y="1197" />
+        <di:waypoint x="2297" y="1197" />
+        <di:waypoint x="2297" y="941" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_Khop_di" bpmnElement="V_Khop">
-        <di:waypoint x="3077" y="755" />
-        <di:waypoint x="3172" y="755" />
+        <di:waypoint x="2517" y="755" />
+        <di:waypoint x="2612" y="755" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3127" y="729" width="90" height="22" />
+          <dc:Bounds x="2567" y="729" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_08_di" bpmnElement="V_08">
-        <di:waypoint x="3322" y="755" />
-        <di:waypoint x="3345" y="755" />
-        <di:waypoint x="3345" y="1325" />
-        <di:waypoint x="3367" y="1325" />
+        <di:waypoint x="2762" y="755" />
+        <di:waypoint x="2785" y="755" />
+        <di:waypoint x="2785" y="1325" />
+        <di:waypoint x="2807" y="1325" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_09_di" bpmnElement="V_09">
-        <di:waypoint x="3517" y="1325" />
-        <di:waypoint x="3612" y="1325" />
+        <di:waypoint x="2957" y="1325" />
+        <di:waypoint x="3052" y="1325" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_VACOMTiepNhan_Khong_di" bpmnElement="V_VACOMTiepNhan_Khong">
-        <di:waypoint x="3662" y="1325" />
-        <di:waypoint x="3757" y="1325" />
+        <di:waypoint x="3102" y="1325" />
+        <di:waypoint x="3197" y="1325" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3712" y="1299" width="90" height="22" />
+          <dc:Bounds x="3152" y="1299" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_ThuLaiVACOM_di" bpmnElement="V_ThuLaiVACOM">
-        <di:waypoint x="3907" y="1325" /><di:waypoint x="3952" y="1325" /></bpmndi:BPMNEdge>
+        <di:waypoint x="3272" y="1361" />
+        <di:waypoint x="3272" y="1407" />
+        <di:waypoint x="2882" y="1407" />
+        <di:waypoint x="2882" y="1361" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_VACOMTiepNhan_Co_di" bpmnElement="V_VACOMTiepNhan_Co">
-        <di:waypoint x="3662" y="1325" />
-        <di:waypoint x="3710" y="1325" />
-        <di:waypoint x="3710" y="1535" />
-        <di:waypoint x="3757" y="1535" />
+        <di:waypoint x="3102" y="1325" />
+        <di:waypoint x="3150" y="1325" />
+        <di:waypoint x="3150" y="1535" />
+        <di:waypoint x="3197" y="1535" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3665" y="1509" width="90" height="22" />
+          <dc:Bounds x="3105" y="1509" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_10_di" bpmnElement="V_10">
-        <di:waypoint x="3907" y="1535" />
-        <di:waypoint x="4002" y="1535" />
+        <di:waypoint x="3347" y="1535" />
+        <di:waypoint x="3442" y="1535" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_PhatHanh_Khong_di" bpmnElement="V_PhatHanh_Khong">
-        <di:waypoint x="4052" y="1535" />
-        <di:waypoint x="4147" y="1535" />
+        <di:waypoint x="3492" y="1535" />
+        <di:waypoint x="3587" y="1535" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4102" y="1509" width="90" height="22" />
+          <dc:Bounds x="3542" y="1509" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_11_di" bpmnElement="V_11">
-        <di:waypoint x="4297" y="1535" />
-        <di:waypoint x="4399" y="1535" />
+        <di:waypoint x="3737" y="1535" />
+        <di:waypoint x="3839" y="1535" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_PhatHanh_Co_di" bpmnElement="V_PhatHanh_Co">
-        <di:waypoint x="4052" y="1535" />
-        <di:waypoint x="4100" y="1535" />
-        <di:waypoint x="4100" y="1685" />
-        <di:waypoint x="4147" y="1685" />
+        <di:waypoint x="3492" y="1535" />
+        <di:waypoint x="3540" y="1535" />
+        <di:waypoint x="3540" y="1685" />
+        <di:waypoint x="3587" y="1685" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4055" y="1659" width="90" height="22" />
+          <dc:Bounds x="3495" y="1659" width="90" height="22" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_12_di" bpmnElement="V_12">
-        <di:waypoint x="4297" y="1685" />
-        <di:waypoint x="4320" y="1685" />
-        <di:waypoint x="4320" y="395" />
-        <di:waypoint x="4342" y="395" />
+        <di:waypoint x="3737" y="1685" />
+        <di:waypoint x="3760" y="1685" />
+        <di:waypoint x="3760" y="395" />
+        <di:waypoint x="3782" y="395" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_13_di" bpmnElement="V_13">
-        <di:waypoint x="4492" y="395" />
-        <di:waypoint x="4515" y="395" />
-        <di:waypoint x="4515" y="185" />
-        <di:waypoint x="4537" y="185" />
+        <di:waypoint x="3932" y="395" />
+        <di:waypoint x="3955" y="395" />
+        <di:waypoint x="3955" y="185" />
+        <di:waypoint x="3977" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="V_14_di" bpmnElement="V_14">
-        <di:waypoint x="4687" y="185" />
-        <di:waypoint x="4789" y="185" />
+        <di:waypoint x="4127" y="185" />
+        <di:waypoint x="4229" y="185" />
       </bpmndi:BPMNEdge>
-    <bpmndi:BPMNShape id="Gateway_LaySongSong_di" bpmnElement="Gateway_LaySongSong"><dc:Bounds x="2400" y="866" width="50" height="50" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Task_LayDuLieuVeThanhToan_di" bpmnElement="Task_LayDuLieuVeThanhToan"><dc:Bounds x="2495" y="800" width="150" height="72" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Task_LayDuLieuKHVaYeuCau_di" bpmnElement="Task_LayDuLieuKHVaYeuCau"><dc:Bounds x="2495" y="910" width="150" height="72" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Gateway_GopDuLieu_di" bpmnElement="Gateway_GopDuLieu"><dc:Bounds x="2690" y="866" width="50" height="50" /></bpmndi:BPMNShape><bpmndi:BPMNEdge id="V_AND_A1_di" bpmnElement="V_AND_A1"><di:waypoint x="2450" y="891" /><di:waypoint x="2470" y="891" /><di:waypoint x="2470" y="836" /><di:waypoint x="2495" y="836" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="V_AND_B1_di" bpmnElement="V_AND_B1"><di:waypoint x="2450" y="891" /><di:waypoint x="2470" y="891" /><di:waypoint x="2470" y="946" /><di:waypoint x="2495" y="946" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="V_AND_A2_di" bpmnElement="V_AND_A2"><di:waypoint x="2645" y="836" /><di:waypoint x="2668" y="836" /><di:waypoint x="2668" y="891" /><di:waypoint x="2690" y="891" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="V_AND_B2_di" bpmnElement="V_AND_B2"><di:waypoint x="2645" y="946" /><di:waypoint x="2668" y="946" /><di:waypoint x="2668" y="891" /><di:waypoint x="2690" y="891" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="V_ToDoiSoat_di" bpmnElement="V_ToDoiSoat"><di:waypoint x="2740" y="891" /><di:waypoint x="2785" y="891" /></bpmndi:BPMNEdge><bpmndi:BPMNShape id="Gateway_ConLuotGuiLai_di" bpmnElement="Gateway_ConLuotGuiLai" isMarkerVisible="true"><dc:Bounds x="3952" y="1300" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="3888" y="1248" width="180" height="34" /></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape id="End_HetLuotGoiAPI_di" bpmnElement="End_HetLuotGoiAPI"><dc:Bounds x="4149" y="1307" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="4085" y="1348" width="165" height="44" /></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNEdge id="V_ConLuotGuiLai_di" bpmnElement="V_ConLuotGuiLai"><di:waypoint x="3977" y="1350" /><di:waypoint x="3977" y="1400" /><di:waypoint x="3442" y="1400" /><di:waypoint x="3442" y="1361" /><bpmndi:BPMNLabel><dc:Bounds x="3700" y="1372" width="70" height="20" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="V_HetLuotGuiLai_di" bpmnElement="V_HetLuotGuiLai"><di:waypoint x="4002" y="1325" /><di:waypoint x="4149" y="1325" /><bpmndi:BPMNLabel><dc:Bounds x="4020" y="1292" width="70" height="20" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge></bpmndi:BPMNPlane>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
